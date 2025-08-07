@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import Homepage from "./pages/home";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
+
+// ルートにアクセスしたらHomepageを表示する
+// element={<Homepage />} "/"にアクセスしたときに表示されるコンポーネントを指定
+
+// Route  複数の<Route>の中から、現在のURLに一致する最初のルートのみをレンダリング
+// Routes URLパスと対応するコンポーネントを定義 パスに一致すると、指定されたコンポーネントがレンダリングされる
+
+// コンポーネント Reactで表示される部品　表示に必要なデータ・処理を一つのオブジェクトにまとめたもの
+
+// 関数コンポーネント
+// コンポーネントととして関数を定義する場合「表示するエレメントをreturnで返す」のが基本
+// function コンポーネント名( 引数 ) {
+//    return ...JSXによる表示...;
+// }
