@@ -1,0 +1,32 @@
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 40px auto;
+}
+
+.tableContainer {
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 115px 115px 110px;
+  column-gap: 2rem;
+  align-items: center;
+  padding: 1rem 1rem 1rem 1.5rem;
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #374151;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskList > *:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
