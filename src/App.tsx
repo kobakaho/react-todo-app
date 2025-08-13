@@ -1,18 +1,21 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/home";
+import TaskListPage from "./pages/tasks/taskListPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
+      <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
     </Routes>
   );
 }
 
 export default App;
 
-// ルートにアクセスしたらHomepageを表示する
+// ルートにアクセスしたらHomepageコンポーネントを表示する
 // element={<Homepage />} "/"にアクセスしたときに表示されるコンポーネントを指定
+//  element={<TaskListPage />} "/tasks"にアクセスしたらTaskListPageコンポーネントを表示する
 
 // Route  複数の<Route>の中から、現在のURLに一致する最初のルートのみをレンダリング
 // Routes URLパスと対応するコンポーネントを定義 パスに一致すると、指定されたコンポーネントがレンダリングされる
