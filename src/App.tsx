@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/home";
 import TaskListPage from "./pages/tasks/taskListPage";
+import TaskDetailPage from "./pages/tasks/taskDetailPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
+      <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
     </Routes>
   );
 }
