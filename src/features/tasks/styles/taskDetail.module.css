@@ -1,0 +1,93 @@
+.taskDetailContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  margin: 4rem auto 0;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.info {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.links {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.editLink {
+  background-color: #0070f3;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.backLink {
+  background-color: #6b7280;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.editLink:hover,
+.backLink:hover {
+  opacity: 0.8;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.completed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.incomplete {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.highPriority {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.mediumPriority {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.lowPriority {
+  background-color: #d1fae5;
+  color: #065f46;
+}
