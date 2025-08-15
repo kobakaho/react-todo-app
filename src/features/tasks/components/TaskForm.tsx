@@ -14,10 +14,12 @@ type Props = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; 
     // フォームが送信されたときに呼ばれる関数
     // 登録処理などを実行する
+    id?: string;
+    // ? は id プロパティは必須ではない id が存在してもなくても良い
 };
 
 // TaskFormコンポーネント タスク作成フォームを表示
-export default function TaskForm({ formData, onChange, onSubmit }: Props) {
+export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
     return (
         <form onSubmit={onSubmit} className={styles.form}>
             <div className={styles.formGroup}>
@@ -62,7 +64,7 @@ export default function TaskForm({ formData, onChange, onSubmit }: Props) {
                 />
             </div>
             <button type="submit" className={styles.submitButton}>
-                作成
+                {id ? "更新" : "作成"} {/* idが存在する場合は「更新する」、存在しない場合は「作成する」 */}
             </button>
         </form>
     );
