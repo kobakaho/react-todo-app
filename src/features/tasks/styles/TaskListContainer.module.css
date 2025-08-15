@@ -30,3 +30,23 @@
 .taskList > *:not(:last-child) {
   border-bottom: 1px solid #e5e7eb;
 }
+
+.taskListHeader {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.newTaskLink {
+  display: inline-block;
+  background-color: #0070f3;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.newTaskLink:hover {
+  background-color: #0051bb;
+}
