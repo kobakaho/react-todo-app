@@ -1,28 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { Priority, Task } from "../../../types/task";
 import styles from "../styles/taskDetail.module.css";
 import { getPriorityClass } from "../utils/priority";
 import { getStatusLabel } from "../utils/status-label";
 import { Task } from "../../../types/task";
-import { mockTasks } from "../mocks/task";
 
 type Props = {
     task: Task;
 };  
 
 export default function TaskDetail({ task }: Props) {
-    const navigate = useNavigate();
-
-    // 削除処理
-    const handleDelete = () => {
-        if (window.confirm("本当にこのタスクを削除しますか？")) {
-            const idx = mockTasks.findIndex((t) => t.id === task.id);
-            if (idx !== -1) {
-                mockTasks.splice(idx, 1);
-                navigate("/tasks");
-            }
-        }
-    };
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>{task.title}</h1>
@@ -54,9 +41,6 @@ export default function TaskDetail({ task }: Props) {
                 <Link to={`/tasks/${task.id}/edit`} className={styles.editLink}>
                     タスクを編集
                 </Link>
-                <button onClick={handleDelete} className={styles.taskDeleteBtn}>
-                    削除
-                </button>
                 <Link to="/tasks" className={styles.backLink}>
                     戻る
                 </Link>
