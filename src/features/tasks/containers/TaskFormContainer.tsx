@@ -9,6 +9,8 @@ import { Priority, TaskFormData } from "../../../types/task";
 // TaskFormContainerコンポーネント タスク作成フォームの状態を管理　
 // 入力ミス・ズレを防ぐ
 export default function TaskFormContainer() {
+// const { id } = useParams<{ id?: string }>(); //新規作成時はidは不要
+
     const [formData, setFormData] = useState<TaskFormData>({
         title: "",
         description: "",
@@ -36,13 +38,14 @@ export default function TaskFormContainer() {
         navigate("/tasks");
     };
 
+
     return (
         <div className={styles.container}>
             <h1>タスク作成</h1>
             <TaskForm 
-            formData={formData}
-            onSubmit={handleSubmit}
-            onChange={handleChange}
+                formData={formData}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
             />
             <div className={styles.cancelContainer}>
                 <Link to="/tasks" className={styles.cancelLink}>
