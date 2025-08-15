@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/home";
 import TaskListPage from "./pages/tasks/taskListPage";
 import TaskDetailPage from "./pages/tasks/taskDetailPage";
+import TaskCreatePage from "./pages/tasks/taskCreatePage";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Route path="/" element={<Homepage />} />
       <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
       <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
+      <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
     </Routes>
   );
 }
