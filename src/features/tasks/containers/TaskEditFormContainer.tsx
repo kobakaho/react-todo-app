@@ -1,62 +1,89 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
-import { mockTasks } from "../mocks/task";
-import { TaskFormData, Task } from "../../../types/task";
+import { getTaskById } from "../hooks/getTaskById";
+import { updateTask } from "../hooks/updateTask";
 import styles from "../styles/taskForm.module.css";
+import { Priority, TaskFormData } from "../../../types/task";
 
+// TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
 export default function TaskEditFormContainer() {
-  const { id } = useParams<{ id: string }>();
+
+  // useParamsフックを使用して、URLパラメータからタスクIDを取得
+  // useParams<{ id?: string }>() のように TypeScriptのジェネリクスを使って型注釈を行うことで
+  // idがstring型であること（あるいは存在しない可能性）を明示
+  // これにより、型安全なコーディングが可能になる
+  const { id } = useParams<{ id?: string }>(); //編集時にはidが必要なためidを渡す
+  const [ formData, setFormData ] = useState<TaskFormData | null>(null);
   const navigate = useNavigate();
-  const taskId = Number(id);
 
-  const [formData, setFormData] = useState<TaskFormData>({
-    title: "",
-    description: "",
-    priority: "medium",
-    dueDate: "",
-  });
-
+  // useEffectフックを使用
+  // コンポーネントがマウントされた際に、getTaskById関数を使用して指定されたIDのタスクデータを取得
+  // formDataステートに設定
   useEffect(() => {
-    const task = mockTasks.find((t) => t.id === taskId);
-    if (task) {
-      setFormData({
-        title: task.title,
-        description: task.description,
-        priority: task.priority,
-        dueDate: task.dueDate,
-      });
-    }
-  }, [taskId]);
+    async function fetchTask() {
+      const task = await getTaskById(id);
+      if (task) {
+          setFormData({
+            title: task.title,
+            description: task.description,
+            priority: task.priority,
+            dueDate: task.dueDate,
+          });
+      }
+    };
+    fetchTask();
+  }, [id]);
 
+  if (!formData) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "300px" }}>
+        読み込み中...
+      </div>
+    );
+  }
+
+  // handleChange関数
+  // フォームの入力値が変更された際に、formDataステートを更新するための関数
+  // TypeScriptによって、React.ChangeEventのジェネリック型を使って入力要素の種類（input, textarea, select）をカバー
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      if (prev) {
+        return { ...prev, [name]: value };
+      }
+      return {
+        ...prev,
+        [name]: name === "priority" ? (value as Priority) : value,
+      };
+    });
+  }
+  // handleSubmit関数
+  // フォームが送信された際に、updateTask関数を実行してタスク情報を更新し、タスク詳細ページにリダイレクト
+  // ここでも id の存在チェックや formData の型チェック→TypeScriptによるバグ防止の効果が発揮されます
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!id) return;
+    e.preventDefault();
+      await updateTask(id, formData);
+      navigate(`/tasks/${id}`);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const idx = mockTasks.findIndex((t) => t.id === taskId);
-    if (idx !== -1) {
-      mockTasks[idx] = {
-        ...mockTasks[idx],
-        ...formData,
-        updatedAt: new Date().toISOString(),
-      } as Task;
-      navigate(`/tasks/${taskId}`);
-    }
-  };
 
   return (
     <div className={styles.container}>
       <h1>タスク編集</h1>
-      <TaskForm formData={formData} onChange={handleChange} onSubmit={handleSubmit} />
+      <TaskForm 
+        formData={formData} 
+        onChange={handleChange} 
+        onSubmit={handleSubmit}
+        id={id}
+      />
       <div className={styles.cancelContainer}>
-        <button className={styles.cancelLink} onClick={() => navigate(-1)}>
+        <Link to={`/tasks/${id}`} className={styles.cancelLink}>
           前の画面に戻る
-        </button>
+        </Link>
       </div>
     </div>
   );
