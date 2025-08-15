@@ -4,16 +4,20 @@ import TaskListPage from "./pages/tasks/taskListPage";
 import TaskDetailPage from "./pages/tasks/taskDetailPage";
 import TaskCreatePage from "./pages/tasks/taskCreatePage";
 import TaskEditPage from "./pages/tasks/taskEditPage";
+import Header from "./shared/components/Header";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Homepage />} />
-      <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
-      <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
-      <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
-      <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
+        <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
+        <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
+        <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
+      </Routes>
+    </>
   );
 }
 
