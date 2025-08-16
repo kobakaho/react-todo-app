@@ -45,7 +45,7 @@ export default function TaskDetailContainer() {
         <div className={styles.taskDetailContainer}>
             <TaskDetail task={task} /> {/* 取得したタスク情報をTaskDetailコンポーネントに渡す */}
             <div>
-                <TaskDeleteButton id={task.id} />
+                <TaskDeleteButton id={task.id.toString()} />
             </div>
         </div>
     );

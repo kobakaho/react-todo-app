@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
 import { createTask } from "../hooks/createTask";
 import styles from "../styles/taskForm.module.css";
-import { Priority, TaskFormData } from "../../../types/task";
+import { TaskFormData } from "../../../types/task";
 
 // TaskFormContainerコンポーネント タスク作成フォームの状態を管理　
 // 入力ミス・ズレを防ぐ
