@@ -53,12 +53,9 @@ export default function TaskEditFormContainer() {
     const { name, value } = e.target;
     setFormData((prev) => {
       if (prev) {
-        return { ...prev, [name]: value };
+        return { ...prev, [name]: name === "priority" ? (value as Priority) : value };
       }
-      return {
-        ...prev,
-        [name]: name === "priority" ? (value as Priority) : value,
-      };
+      return null;
     });
   }
   // handleSubmit関数
