@@ -18,7 +18,7 @@ export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleS
   // handleStatusChange関数
   // セレクトボックスでステータスが変更されたらonToggleStatus関数を呼び出して、ステータスを更新する処理を行う
   // セレクトボックスの値が変更されたらhandleStatusChange関数を呼び出す
-  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStatus = e.target.value === "true";
     if (onToggleStatus) {
       onToggleStatus(task.id, newStatus);
@@ -32,7 +32,7 @@ export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleS
       </Link>
       <select 
         value={task.status ? "true" : "false"} 
-        onChange={handleStatusChange}
+        onChange={(e) => handleStatusChange(e)}
         className={`${styles.badge} ${task.status ? styles.completed : styles.incomplete}`}>
         <option value="false">{getStatusLabel(false)}</option>
         <option value="true">{getStatusLabel(true)}</option>
