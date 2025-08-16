@@ -18,4 +18,5 @@ export interface Task {
 // Omit<T, K> は TypeScript のユーティリティ型の一つ
 // 指定した型 T から特定のプロパティ K を除外した新しい型を作成
 // Omitを使うことで、Task型から不要なプロパティを除いた新しい型を簡単に作成できる 可読性UP
-export type TaskFormData = Omit<Task, "id" | "status" | "createdAt" | "updatedAt">;
+export type TaskFormData = Omit<Task, "id" | "createdAt" | "updatedAt">;
+

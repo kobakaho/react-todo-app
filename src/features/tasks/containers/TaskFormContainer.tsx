@@ -16,6 +16,7 @@ export default function TaskFormContainer() {
         description: "",
         priority: "medium",
         dueDate: "",
+        status: false // 初期値は未完了
     }); // 初期値
 
     // タスク一覧ページにリダイレクトするためのnavigate関数を取得
