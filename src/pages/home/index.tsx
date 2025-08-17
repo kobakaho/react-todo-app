@@ -9,7 +9,10 @@ export default function Homepage() {
         React×Vite×React Routerで作るタスク管理アプリです。
       </p>
       <Link to="/tasks" className={styles.link}>
-        タスク一覧へ
+        タスク一覧（カリキュラム）
+      </Link>
+      <Link to="/todo" className={styles.link}>
+        todoリスト（AI）
       </Link>
     </div>
  )
