@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
-        <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
         <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
+        <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
         <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
         <Route path="/todo" element={<ToDoListPage />} />{/* Todoページへのルート */}
       </Routes>
