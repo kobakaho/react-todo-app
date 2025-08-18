@@ -1,25 +1,31 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { Todo } from "../../../types/todo";
 import { initialTodos } from "../mocks/todo";
+import TodoItem from "../components/ToDoItem";
 import styles from "../styles/todo.module.css";
 
 export default function ToDoListContainer() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [newTodoText, setNewTodoText] = useState("");
 
-  const handleAddTodo = (e: React.FormEvent) => {
+  const handleAddTodo = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (newTodoText.trim()) {
-      const newTodo = {
-        id: Date.now(),
-        text: newTodoText.trim(),
-      };
-      setTodos([...todos, newTodo]);
-      setNewTodoText("");
-    }
+    if (newTodoText.trim() === '') return;
+
+    const newTodo: Todo = {
+      id: Date.now(), // ユニークなIDを生成
+      text: newTodoText,
+    };
+
+    setTodos([...todos, newTodo]);
+    setNewTodoText('');
+  };
+  
+  const handleDeleteTodo = (idToDelete: number) => {
+    setTodos(todos.filter(todo => todo.id !== idToDelete));
   };
 
-    return (
+  return (
     <div className={styles.container}>
         <h1>todoリスト</h1>
         <div className={styles.tableContainer}>
@@ -36,7 +42,12 @@ export default function ToDoListContainer() {
             </form>
             <ul aria-live="polite" className={styles.description}>
                 {todos.map(todo => (
-                <li key={todo.id}>{todo.text}</li>
+                <TodoItem
+                    key={todo.id}
+                    id={todo.id}
+                    text={todo.text}
+                    onDelete={handleDeleteTodo}
+                />                
                 ))}
             </ul>
         </div>
