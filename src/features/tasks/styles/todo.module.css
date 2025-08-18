@@ -33,22 +33,31 @@ h1 {
 }
 
 .submitButton {
-  background-color: #ec89ee;
-  color: white;
-  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #ec89ee, #b06ab3);
+  color: #fff;
+  padding: 0.8rem 1.8rem;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 5000px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(236, 137, 238, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
 .submitButton:hover {
-  background-color: #d24fd4;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(178, 106, 179, 0.5);
+  background: linear-gradient(135deg, #d24fd4, #944bbb);
+}
+
+.submitButton:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 3px 8px rgba(178, 106, 179, 0.4);
 }
 
 .description {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: #555;
   list-style: none;
   padding: 0;
@@ -72,16 +81,67 @@ h1 {
 }
 
 .deleteButton {
-  background: #ff6b6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+
+  background: linear-gradient(135deg, #ff6b6b, #d90429);
   border: none;
-  color: white;
+  color: #fff;
   font-size: 0.9rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.3rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px; /* pill型で柔らかく */
   cursor: pointer;
-  transition: background 0.2s ease;
+
+  box-shadow: 0 3px 8px rgba(233, 30, 99, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
 .deleteButton:hover {
-  background: #e63946;
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(135deg, #e63946, #9d0208);
+  box-shadow: 0 5px 12px rgba(233, 30, 99, 0.4);
+}
+
+.deleteButton:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 2px 6px rgba(233, 30, 99, 0.35);
+}
+
+.todoItem input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #bbb;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+  background-color: #fff;
+}
+
+.todoItem input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 12px;
+  border-right: 2px solid #4f46e5;
+  border-bottom: 2px solid #4f46e5;
+  left: 5px;
+  transform: scale(0) rotate(20deg);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.todoItem input[type="checkbox"]:checked {
+  border-color: #4f46e5;
+  background-color: #eef2ff;
+}
+
+.todoItem input[type="checkbox"]:checked::after {
+  transform: scale(1) rotate(45deg);
+  opacity: 1;
 }
