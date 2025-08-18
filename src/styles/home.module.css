@@ -19,7 +19,9 @@
 }
 
 .link {
-  display: inline-block;
+  display: block;              /* 横並び→縦並びに */
+  width: fit-content;          /* ボタン幅を内容に合わせる */
+  margin: 0 auto 1.2rem auto;  /* 下に間隔を広げ中央寄せ */
   background-color: #0070f3;
   color: white;
   padding: 0.8rem 1.5rem;
@@ -28,7 +30,12 @@
   font-size: 1rem;
   transition: background-color 0.3s ease;
 }
-
+.link:last-child {
+  background-color: #ec89ee;
+}
 .link:hover {
   background-color: #0051bb;
+}
+.link:last-child:hover {
+  background-color: #d24fd4;
 }
