@@ -25,6 +25,15 @@ export default function ToDoListContainer() {
     setTodos(todos.filter(todo => todo.id !== idToDelete));
   };
 
+  const handleToggleTodo = (idToToggle: number) => {
+    setTodos(
+      todos.map(todo =>
+        todo.id === idToToggle ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+
   return (
     <div className={styles.container}>
         <h1>todoリスト</h1>
@@ -46,8 +55,10 @@ export default function ToDoListContainer() {
                     key={todo.id}
                     id={todo.id}
                     text={todo.text}
+                    completed={todo.completed}
                     onDelete={handleDeleteTodo}
-                />                
+                    onToggle={handleToggleTodo}
+                />
                 ))}
             </ul>
         </div>
