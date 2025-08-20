@@ -23,6 +23,9 @@ function App() {
   );
 }
 
+// default export 1つもモジュールにつき1つの「主要な」をエクスポートする場合に使用する
+// import時に任意の名前を付けられる
+// ファイル内で1つだけしか定義できない
 export default App;
 
 // ルートにアクセスしたらHomepageコンポーネントを表示する

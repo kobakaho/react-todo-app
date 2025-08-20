@@ -1,15 +1,14 @@
-import React from "react";
 import styles from "../styles/todo.module.css";
 
 interface TodoItemProps {
   id: number;
   text: string;
-  completed?: boolean;
+  completed: boolean;
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ id, text, completed, onDelete, onToggle }) => {
+export default function TodoItem({ id, text, completed, onDelete, onToggle }: TodoItemProps) {
   return (
     <li className={styles.todoItem} id={`todo-item-${id}`}>
         <input
@@ -29,4 +28,3 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, text, completed, onDelete, onTo
   );
 };
 
-export default TodoItem;
