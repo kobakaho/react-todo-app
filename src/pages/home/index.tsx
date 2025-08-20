@@ -12,7 +12,7 @@ export default function Homepage() {
         タスク一覧（カリキュラム）
       </Link>
       <Link to="/todo" className={styles.link}>
-        todoリスト（AI）
+        todoリスト（バイブコーディング）
       </Link>
     </div>
  )

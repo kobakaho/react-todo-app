@@ -15,14 +15,15 @@ export default function ToDoListContainer() {
     const newTodo: Todo = {
       id: Date.now(), // ユニークなIDを生成
       text: newTodoText,
+      completed: false, // 新しいtodoは未完了として追加
     };
 
     setTodos([...todos, newTodo]);
-    setNewTodoText('');
+    setNewTodoText(''); // 入力フィールドをクリア
   };
-  
+
   const handleDeleteTodo = (idToDelete: number) => {
-    setTodos(todos.filter(todo => todo.id !== idToDelete));
+    confirm("削除しますか？") && setTodos(todos.filter(todo => todo.id !== idToDelete));
   };
 
   const handleToggleTodo = (idToToggle: number) => {
@@ -32,7 +33,6 @@ export default function ToDoListContainer() {
       )
     );
   };
-
 
   return (
     <div className={styles.container}>

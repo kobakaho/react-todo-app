@@ -8,13 +8,14 @@ import styles from "../styles/TaskListContainer.module.css";
 
 
 // useEffect 副作用を実行するためのフック
-// ややこし！テキスト！
 
 // useState ユーザの入力やボタンのクリックによるデータの変化を管理するためのフック
 // コンポーネントの状態（State）を管理する
 //　通常の変数はコンポーネントが再レンダリングされるとリセットされるがこれ使うと値を保持できる
 
 export default function TaskListContainer() {
+    // named export　1つのモジュールから複数の値をexportできる
+    // import時に波括弧で指定してインポートする
     const [tasks, setTasks] = useState<Task[]>([]);
 
     // タスク一覧データを管理するためのstateを定義
@@ -55,20 +56,20 @@ export default function TaskListContainer() {
                     <div>タスク名</div>
                     <div>ステータス</div>
                     <div>優先度</div>
-                    <div>期限日</div>            
+                    <div>期限日</div>
                 </div>
             <div className= {styles.taskList}>
               {tasks.map((task) => (
-                <TaskCard 
-                  key={task.id} 
-                  task={task} 
+                <TaskCard
+                  key={task.id}
+                  task={task}
                   onToggleStatus={handleToggleStatus} // タスクのステータスを更新するための関数を渡す
               />
               ))}
             </div>
         </div>
     </div>
- );
+    );
 }
 
 // tasks.map() メソッドを使ってタスク一覧データを一覧表示
