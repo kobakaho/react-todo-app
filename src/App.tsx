@@ -6,6 +6,10 @@ import TaskCreatePage from "./pages/tasks/taskCreatePage";
 import TaskEditPage from "./pages/tasks/taskEditPage";
 import ToDoListPage from "./pages/todo/todoListPage";
 import Header from "./shared/components/Header";
+import SignUp from "./features/auth/Signup";
+import SignIn from "./features/auth/SignIn";
+import Mypage from "./features/auth/Mypage";
+
 
 function App() {
   return (
@@ -13,6 +17,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
         <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
         <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
