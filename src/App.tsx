@@ -6,7 +6,7 @@ import TaskCreatePage from "./pages/tasks/taskCreatePage";
 import TaskEditPage from "./pages/tasks/taskEditPage";
 import ToDoListPage from "./pages/todo/todoListPage";
 import Header from "./shared/components/Header";
-import SignUp from "./features/auth/Signup";
+import SignUp from "./features/auth/SignUp";
 import SignIn from "./features/auth/SignIn";
 import Mypage from "./features/auth/Mypage";
 
