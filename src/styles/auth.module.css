@@ -17,6 +17,13 @@
   color: #333;
 }
 
+.form {
+  border: 1.5px solid #ccc; 
+  border-radius: 8px;
+  padding: 16px;            
+  margin-top: 20px;  
+}
+
 .formGroup {
   margin-bottom: 1.2rem;
 }
@@ -29,13 +36,18 @@
 }
 
 .input {
-  width: 100%;
+  width: 90%;
   padding: 0.8rem;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   outline: none;
   transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 1.2rem;
+}
+
+.input:hover {
+  border-color: #4a90e2;
 }
 
 .input:focus {

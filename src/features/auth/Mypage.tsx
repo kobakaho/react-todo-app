@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from "../../styles/auth.module.css";
-import { onAuthStateChanged, signOut, deleteUser, User } from 'firebase/auth';
+import { onAuthStateChanged, signOut, deleteUser, updateProfile, User } from 'firebase/auth';
 import { auth } from '../../firebase'; // authインスタンスをインポート
 import { useNavigate } from 'react-router-dom';
 
 const Mypage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
+  //const displayName = user.displayName
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,19 @@ const Mypage: React.FC = () => {
     }
   };
 
+  const handleUpdateProfile = async (e:React.FormEvent) => {
+    e.preventDefault();
+    if (auth.currentUser) {
+      try{
+        await updateProfile(auth.currentUser, { displayName: username });
+        alert("プロフィールを更新しました。");
+      } catch (error) {
+        console.error("プロフィールの更新に失敗しました:", error);
+        alert("プロフィールの更新に失敗しました。");
+      }
+    }
+  };
+
   const handleDeleteAccount = async () => {
     if (user) {
       try {
@@ -56,8 +71,24 @@ const Mypage: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>マイページ</h2>
-      {user ? <p>こんにちは、{user.email}さん！</p> : <p>ログインしていません。</p>}
-      username
+      {user ? <p>こんにちは、{user.displayName || user.email}さん！</p> : <p>ログインしていません。</p>}
+
+      <form onSubmit={handleUpdateProfile} className={styles.form}>
+        <div className={styles.formGroup}>
+
+        <label htmlFor="username" className={styles.label}>ユーザーネーム:</label>
+        <input
+          type="username"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className={styles.input}
+          required
+        />
+        <button type="submit" className={styles.button}>更新</button>
+        </div>
+      </form>
+      
       <button onClick={handleSignOut} className={`${styles.button} ${styles.logoutBtn}`}>
         ログアウト
       </button>
