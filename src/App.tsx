@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./features/auth/PrivateRoute";
 import Homepage from "./pages/home";
 import TaskListPage from "./pages/tasks/taskListPage";
 import TaskDetailPage from "./pages/tasks/taskDetailPage";
@@ -21,16 +22,20 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
-        <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
-        <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
-        <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
-        <Route path="/todo" element={<ToDoListPage />} />{/* Todoページへのルート */}
-      </Routes>
+        <Route element={<PrivateRoute />}>
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
+          <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
+          <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
+          <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
+          <Route path="/todo" element={<ToDoListPage />} />{/* Todoページへのルート */}
+        </Route>
+        </Routes>
     </>
   );
 }
+
+
 
 // default export 1つもモジュールにつき1つの「主要な」をエクスポートする場合に使用する
 // import時に任意の名前を付けられる

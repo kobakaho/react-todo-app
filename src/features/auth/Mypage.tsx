@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Mypage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
-  //const displayName = user.displayName
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Mypage: React.FC = () => {
     e.preventDefault();
     if (auth.currentUser) {
       try{
-        await updateProfile(auth.currentUser, { displayName: username });
+        await updateProfile(auth.currentUser, { displayName: username, photoURL: auth.currentUser.photoURL });
         alert("プロフィールを更新しました。");
       } catch (error) {
         console.error("プロフィールの更新に失敗しました:", error);
@@ -71,7 +70,8 @@ const Mypage: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>マイページ</h2>
-      {user ? <p>こんにちは、{user.displayName || user.email}さん！</p> : <p>ログインしていません。</p>}
+      {user ? <p>こんにちは、{user.displayName || '名無し'}さん！</p> : <p>ログインしていません。</p>}
+      {user ? <p>メールアドレス：{user.email}</p> : null}
 
       <form onSubmit={handleUpdateProfile} className={styles.form}>
         <div className={styles.formGroup}>
@@ -88,7 +88,7 @@ const Mypage: React.FC = () => {
         <button type="submit" className={styles.button}>更新</button>
         </div>
       </form>
-      
+
       <button onClick={handleSignOut} className={`${styles.button} ${styles.logoutBtn}`}>
         ログアウト
       </button>
