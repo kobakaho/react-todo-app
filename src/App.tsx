@@ -8,6 +8,7 @@ import ToDoListPage from "./pages/todo/todoListPage";
 import Header from "./shared/components/Header";
 import SignUp from "./features/auth/SignUp";
 import SignIn from "./features/auth/SignIn";
+import ResetPassword from "./features/auth/ResetPassword";
 import Mypage from "./features/auth/Mypage";
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
         <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}

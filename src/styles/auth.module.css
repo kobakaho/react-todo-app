@@ -98,3 +98,18 @@
 .deleteBtn:hover {
   background: #c72e39;
 }
+
+.success {
+  color: green;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 10px;
+  text-decoration: underline;
+}

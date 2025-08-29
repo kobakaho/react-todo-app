@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from "../../styles/auth.module.css";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase'; // authインスタンスをインポート
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -59,7 +59,10 @@ const SignIn: React.FC = () => {
         {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>ログイン</button>
       </form>
-    </div>  );
+
+      <Link to="/resetpassword">パスワードをお忘れですか？</Link>
+    </div>  
+  );
 };
 
 export default SignIn;
