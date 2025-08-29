@@ -10,10 +10,10 @@ export default function Header() {
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
                     <li>
-                        <Link to="/tasks/new">新規作成</Link>
+                        <Link to="/signup">新規登録</Link>
                     </li>
                     <li>
-                        <Link to="/tasks">タスク一覧</Link>
+                        <Link to="/signin">ログイン</Link>
                     </li>
                 </ul>
             </nav>
