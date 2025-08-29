@@ -21,7 +21,7 @@ const ResetPassword: React.FC = () => {
         }
         try {
             await sendPasswordResetEmail(auth, email);
-            setSuccessMessage('パスワード再設定用のメールを送信しました。');
+            setSuccessMessage('パスワード再設定用のメールを送信しました。迷惑メールに振り分けられる可能性があります。');
             } catch (err: any) {
             console.error('パスワード再設定エラー:', err);
             if (err.code === 'auth/user-not-found') {
