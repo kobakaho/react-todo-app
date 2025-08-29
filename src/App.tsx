@@ -11,7 +11,7 @@ import SignUp from "./features/auth/SignUp";
 import SignIn from "./features/auth/SignIn";
 import ResetPassword from "./features/auth/ResetPassword";
 import Mypage from "./features/auth/Mypage";
-
+import "./index.css"
 
 function App() {
   return (
