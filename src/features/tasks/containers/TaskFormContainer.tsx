@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
-import { createTask } from "../hooks/createTask";
-import styles from "../styles/taskForm.module.css";
+import { createTask } from "../api/createTask";
 import { TaskFormData } from "../../../types/task";
 
 // TaskFormContainerコンポーネント タスク作成フォームの状態を管理　
@@ -39,17 +38,15 @@ export default function TaskFormContainer() {
         navigate("/tasks");
     };
 
-
     return (
-        <div className={styles.container}>
-            <h1>タスク作成</h1>
-            <TaskForm 
+        <div>
+            <TaskForm
                 formData={formData}
                 onChange={handleChange}
                 onSubmit={handleSubmit}
             />
-            <div className={styles.cancelContainer}>
-                <Link to="/tasks" className={styles.cancelLink}>
+            <div>
+                <Link to="/tasks">
                 前の画面に戻る
                 </Link>
             </div>
