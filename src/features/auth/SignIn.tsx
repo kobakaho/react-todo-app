@@ -16,7 +16,7 @@ const SignIn: React.FC = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert('ログインしました！');
-      navigate('/mypage'); // ログイン成功後、マイページへリダイレクト
+      navigate('/tasks'); // ログイン成功後、マイページへリダイレクト
     } catch (err: any) {
       console.error('サインインエラー:', err);
       // Firebaseのエラーコードに基づいてメッセージを調整
