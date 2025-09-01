@@ -16,7 +16,7 @@ type Props = {
 export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleStatusをpropsで受け取る 
 
   return (
-    <div className={styles.taskCard}>
+    <div className={`${styles.taskCard} ${task.status ? styles.completed : ""}`}>
       <Checkbox
         checked={task.status}
         onChange={() => onToggleStatus(task.id, !task.status)}
@@ -26,7 +26,7 @@ export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleS
         <h3 className={styles.taskTitle}>{task.title}</h3>
       </Link>
         <p className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>{task.priority}</p>
-        <p className={styles.taskDueDate}>～{task.dueDate ? task.dueDate : "今日"}</p>
+        <p className={styles.dueDate}>～ {task.dueDate ? task.dueDate : "今日"}</p>
     </div>
 
     );
