@@ -1,75 +1,118 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { getTasks } from "../hooks/getTasks";
 import { updateTask } from "../hooks/updateTask";
 import { Task } from "../../../types/task";
-import TaskCard from "../components/TaskCard";
+import TaskList from "../components/TaskList";
 import styles from "../styles/TaskListContainer.module.css";
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
-
-// useEffect 副作用を実行するためのフック
-
-// useState ユーザの入力やボタンのクリックによるデータの変化を管理するためのフック
-// コンポーネントの状態（State）を管理する
-//　通常の変数はコンポーネントが再レンダリングされるとリセットされるがこれ使うと値を保持できる
 
 export default function TaskListContainer() {
-    // named export　1つのモジュールから複数の値をexportできる
-    // import時に波括弧で指定してインポートする
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [todayTasks, setTodayTasks] = useState<Task[]>([]);
+    const [pastTasks, setPastTasks] = useState<Task[]>([]);
+    const [upcomingTasks, setUpcomingTasks] = useState<Task[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // タスク一覧データを管理するためのstateを定義
-    // 型を明示することで配列の中にTask型のデータしか入らないことが保証される
-    const fetchTasks = async () => {
-        const fetchedTasks = await getTasks();
-        setTasks(fetchedTasks);
-    };
+    const fetchAndCategorizeTasks = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const allTasks = await getTasks();
+
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayString = `${yyyy}-${mm}-${dd}`
+
+            const todayList: Task[] = [];
+            const pastList: Task[] = [];
+            const upcomingList: Task[] = [];
+
+            allTasks.forEach(task => {
+                // 完了済みのタスクの処理
+                
+                // 期限がない、または期限が今日のタスク「今日やること」
+                if (!task.dueDate || task.dueDate === todayString) {
+                    todayList.push(task);
+                    // 期限が今日以前のタスク「過去のタスク」
+                } else if (task.dueDate < todayString) { 
+                    pastList.push(task);
+                } else { 
+                    // 期限が明日以降のタスク「今後のタスク」
+                    upcomingList.push(task);
+                }
+            });
+
+            setTodayTasks(todayList);
+            setPastTasks(pastList);
+            setUpcomingTasks(upcomingList);
+        } catch (err) {
+            setError("タスクの読み込みに失敗しました。");
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
     useEffect(() => {
-        fetchTasks();
-    }, []);
-    // useEffectフックを使ってコンポーネントのマウント時にgetTasks関数を実行してタスク一覧データを取得
-    // getTasks関数で取得したデータをsetTasks関数でstateにセット
+        fetchAndCategorizeTasks();
+    }, [fetchAndCategorizeTasks]);
 
-    // handleToggleStatus関数
-    // updateTask関数を使用して、指定されたIDのタスクのステータスを更新する関数
     const handleToggleStatus = async (taskId: Task['id'], newStatus: boolean) => {
-        await updateTask(String(taskId), { status: newStatus });
-        fetchTasks(); //タスクステータスが変更された後にfetchTasks関数を実行して、タスク一覧を再取得
+        try {
+            await updateTask(String(taskId), { status: newStatus });
+            // 状態更新が成功したら、リストを再読み込みして分類し直す
+            await fetchAndCategorizeTasks();
+        } catch (error) {
+            setError("タスクの更新に失敗しました。");
+            console.error("タスクの更新に失敗しました。", error);
+        }
     };
-    // taskId: Task['id'] Task型に定義されているidと同じ型を使用する
-    // ステータスはtrueまたはfalseのみを取るので、boolean型
-    // タスクの id は number 型として定義
-    // しかし、updateTask 関数の定義を見ると、id の型が string 型で受け取る
-    // →updateTask 側が string を期待しているため、関数を呼び出す前に明示的に String() を使って型を合わせる
+
+    if (loading) return <div className={styles.message}>読み込み中...</div>;
+    if (error) return <div className={styles.message}>{error}</div>;
 
     return (
-        <div className={styles.container}>
-            <h1>タスク一覧</h1>
-            <div className={styles.taskListHeader}>
-                <Link to="/tasks/new" className={styles.newTaskLink}>
-                新規作成
+        <div className={styles.Container}>
+            {/*<div className={styles.headerContainer}>*/}
+                <Link to="/tasks/new">
+                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                    <Fab color="primary" aria-label="add">
+                        <AddIcon />
+                    </Fab>
+                    </Box>
                 </Link>
+            {/*</div>*/}
+
+            <div>
+                {pastTasks.length > 0 ? (
+                    <TaskList tasks={pastTasks} onToggleStatus={handleToggleStatus} />
+                ) : (
+                    <p className={styles.emptyMessage}>過去のタスクはありません。</p>
+                )}
             </div>
-            <div className={styles.tableContainer}>
-                <div className={styles.header}>
-                    <div>タスク名</div>
-                    <div>ステータス</div>
-                    <div>優先度</div>
-                    <div>期限日</div>
-                </div>
-            <div className= {styles.taskList}>
-              {tasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  onToggleStatus={handleToggleStatus} // タスクのステータスを更新するための関数を渡す
-              />
-              ))}
+            <div>
+                {/*<h2 className={styles.sectionHeader}>今日やること</h2>*/}
+                {todayTasks.length > 0 ? (
+                    <TaskList tasks={todayTasks} onToggleStatus={handleToggleStatus} />
+                ) : (
+                    <p className={styles.emptyMessage}>今日やるタスクはありません。</p>
+                )}
+            </div>
+
+            <div>
+                {/*<h2 className={styles.sectionHeader}>今後のタスク</h2>*/}
+                {upcomingTasks.length > 0 ? (
+                    <TaskList tasks={upcomingTasks} onToggleStatus={handleToggleStatus} />
+                ) : (
+                    <p className={styles.emptyMessage}>今後のタスクはありません。</p>
+                )}
             </div>
         </div>
-    </div>
     );
 }
-
-// tasks.map() メソッドを使ってタスク一覧データを一覧表示
