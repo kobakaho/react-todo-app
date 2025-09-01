@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-// import { Priority, Task } from "../../../types/task"; 
 import styles from "../styles/taskCard.module.css";
 import { getPriorityClass } from "../utils/priority";
-import { getStatusLabel } from "../utils/status-label";
 import { Task } from "../../../types/task";
+import Checkbox from '@mui/material/Checkbox';
 
 type Props = {
     task: Task;
@@ -15,31 +14,21 @@ type Props = {
   // →id の型が将来変わっても他のコードに自動で反映されるため、保守性が高まる
 
 export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleStatusをpropsで受け取る 
-  // handleStatusChange関数
-  // セレクトボックスでステータスが変更されたらonToggleStatus関数を呼び出して、ステータスを更新する処理を行う
-  // セレクトボックスの値が変更されたらhandleStatusChange関数を呼び出す
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value === "true";
-    if (onToggleStatus) {
-      onToggleStatus(task.id, newStatus);
-    }
-  };
 
   return (
     <div className={styles.taskCard}>
+      <Checkbox
+        checked={task.status}
+        onChange={() => onToggleStatus(task.id, !task.status)}
+        sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+      />
       <Link to={`/tasks/${task.id}`} className={styles.detailLink}>
         <h3 className={styles.taskTitle}>{task.title}</h3>
       </Link>
-      <select 
-        value={task.status ? "true" : "false"} 
-        onChange={(e) => handleStatusChange(e)}
-        className={`${styles.badge} ${task.status ? styles.completed : styles.incomplete}`}>
-        <option value="false">{getStatusLabel(false)}</option>
-        <option value="true">{getStatusLabel(true)}</option>
-      </select>
         <p className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>{task.priority}</p>
-        <p className={styles.taskDueDate}>{task.dueDate}</p>
-      </div>
+        <p className={styles.taskDueDate}>～{task.dueDate ? task.dueDate : "今日"}</p>
+    </div>
+
     );
 }
 // タスクのステータスに応じてスタイルを適用
