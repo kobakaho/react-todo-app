@@ -1,4 +1,7 @@
 import { Route, Routes, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 import PrivateRoute from "./features/auth/PrivateRoute";
 import Homepage from "./pages/home";
 import TaskListPage from "./pages/tasks/taskListPage";
@@ -14,10 +17,24 @@ import Mypage from "./features/auth/Mypage";
 import "./index.css"
 
 function App() {
+  const [user, setUser] = useState(auth.currentUser);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
       <Routes>
-        <Route element={<><Header /><Outlet /></>}>
+        <Route element={<>{user ? <AuthHeader /> : <Header />}<Outlet /></>}>
           <Route path="/" element={<Homepage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
@@ -36,7 +53,6 @@ function App() {
       </Routes>
   );
 }
-
 
 
 // default export 1つもモジュールにつき1つの「主要な」をエクスポートする場合に使用する
