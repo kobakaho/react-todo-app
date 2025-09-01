@@ -4,7 +4,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function AuthHeader() {
     const navigate = useNavigate();
 
@@ -16,9 +15,7 @@ export default function AuthHeader() {
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
                 <IconButton size="large" onClick={() => navigate("/mypage")}>
-                    <SettingsIcon>
-                        <SettingsIcon />
-                    </SettingsIcon>
+                    <SettingsIcon />
                 </IconButton>
                 </ul>
             </nav>
