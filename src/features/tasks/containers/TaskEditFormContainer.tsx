@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import TaskForm from "../components/TaskForm";
 import { getTaskById } from "../api/getTaskById";
 import { updateTask } from "../api/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
+import TaskForm from "../components/TaskForm";
+import Circular from "../../../shared/components/Circular"
 
 // TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
 export default function TaskEditFormContainer() {
@@ -36,41 +37,8 @@ export default function TaskEditFormContainer() {
   }, [id]);
 
   if (!formData) {
-    return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "300px" }}>
-        読み込み中...
-
-      </div>
-    );
+    return <Circular />
   }
-{/*import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
-
-export default function SimpleBackdrop() {
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  ローディングのUI
-  return (
-    <div>
-      <Button onClick={handleOpen}>Show backdrop</Button>
-      <Backdrop
-        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-        open={open}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    </div>
-  );
-}
-  */}
 
   // handleChange関数
   // フォームの入力値が変更された際に、formDataステートを更新するための関数

@@ -15,6 +15,7 @@ import SignUp from "./features/auth/SignUp";
 import SignIn from "./features/auth/SignIn";
 import ResetPassword from "./features/auth/ResetPassword";
 import Mypage from "./features/auth/Mypage";
+import Circular from "./shared/components/Circular"
 import "./index.css"
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Circular />;
   }
 
   return (

@@ -4,6 +4,7 @@ import { getTasks } from "../api/getTasks";
 import { updateTask } from "../api/updateTask";
 import { Task } from "../../../types/task";
 import TaskList from "../components/TaskList";
+import Circular from "../../../shared/components/Circular"
 import styles from "../styles/TaskListContainer.module.css";
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -52,7 +53,7 @@ export default function TaskListContainer() {
             setPastTasks(pastList);
             setUpcomingTasks(upcomingList);
         } catch (err) {
-            setError("タスクの読み込みに失敗しました。");
+            setError("タスクのに失敗しました。");
             console.error(err);
         } finally {
             setLoading(false);
@@ -74,7 +75,7 @@ export default function TaskListContainer() {
         }
     };
 
-    if (loading) return <div className={styles.message}>読み込み中...</div>;
+    if (loading) return <Circular />;
     if (error) return <div className={styles.message}>{error}</div>;
 
     return (

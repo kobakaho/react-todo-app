@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getTaskById } from "../api/getTaskById";
 import { Task } from "../../../types/task";
 import TaskDetail from "../components/TaskDetail";
+import Circular from "../../../shared/components/Circular"
 
 export default function TaskDetailContainer() {
     const { id } = useParams<{ id: string }>();
@@ -30,17 +31,7 @@ export default function TaskDetailContainer() {
     // 取得されたタスクが undefined の場合もあるため、?? 演算子で null に置き換え、安全に扱えるようにしている
 
     if (!task) {
-        return (
-            <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "300px",
-            }}
-            >
-                読みこみ中...
-            </div>
-        );
+        return <Circular />
     }
 
     return (

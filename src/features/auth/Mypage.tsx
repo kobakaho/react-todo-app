@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from "../../styles/auth.module.css";
+import Circular from "../../shared/components/Circular";
 import { onAuthStateChanged, signOut, deleteUser, updateProfile, User } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -67,7 +68,7 @@ const Mypage: React.FC = () => {
   };
 
   if (loading) {
-    return <div>認証状態を確認中...</div>;
+    return <Circular />;
   }
 
   return (
