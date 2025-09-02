@@ -1,4 +1,5 @@
 export type Priority = "high" | "medium" | "low";
+import { Timestamp } from "firebase/firestore";
 // タスクの優先度
 
 // タスクオブジェクト全体の方を定義
@@ -10,8 +11,8 @@ export interface Task {
     priority: Priority; // リテラル型（特定の値を持つ型）
     // 意図しない値（例：high・medium・low以外の値）が入ることをコンパイル時に防ぐ
     dueDate: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Timestamp;
+    updateAt: Timestamp;
 }
 
 // タスク作成・編集フォームのデータ型
