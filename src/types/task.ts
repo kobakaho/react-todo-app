@@ -3,7 +3,7 @@ export type Priority = "high" | "medium" | "low";
 
 // タスクオブジェクト全体の方を定義
 export interface Task {
-    id: number;
+    id: string; // firebase用に変更
     title: string;
     description: string;
     status: boolean; // true false

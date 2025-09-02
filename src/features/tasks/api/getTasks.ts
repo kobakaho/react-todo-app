@@ -12,7 +12,9 @@ export const getTasks = async (): Promise<Task[]> => {
     const querySnapshot = await getDocs(q);
     const tasks: Task[] = [];
     querySnapshot.forEach((doc) => {
-        tasks.push(doc.data() as Task);
+        tasks.push({
+            id: doc.id,
+            ...doc.data(),} as Task);
     });
     return tasks;
 };
