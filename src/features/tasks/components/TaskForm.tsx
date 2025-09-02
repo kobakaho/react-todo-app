@@ -38,7 +38,6 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
                     name="description"
                     value={formData.description}
                     onChange={onChange}
-                    required
                 />
             </div>
             <div className={styles.formGroup}>
@@ -58,9 +57,8 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
                 <input
                     type="date"
                     name="dueDate"
-                    value={formData.dueDate}
+                    value={formData.dueDate || ""}
                     onChange={onChange}
-                    required
                 />
             </div>
             <button type="submit" className={styles.submitButton}>

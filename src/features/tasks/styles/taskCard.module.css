@@ -40,16 +40,6 @@
   cursor: pointer;
 }
 
-.completed {
-  background-color: #d1fae5;
-  color: #065f46;
-}
-
-.incomplete {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
 .highPriority {
   background-color: #fee2e2;
   color: #991b1b;
@@ -73,3 +63,29 @@
 .dueDate {
   color: #6b7280;
 }
+
+/*チェックボックスを有効にしたらtask操作を無効化*/
+.completed {
+  background-color: #f9f9f9;
+  opacity: 0.7;
+}
+
+.completed .taskTitle {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.completed .detailLink {
+  pointer-events: none;
+  cursor: default;
+}
+.completed .badge {
+  pointer-events: none;
+  cursor: default;
+}
+
+.completed .dueDate {
+  pointer-events: none;
+  cursor: default;
+}
+/*ここまで*/
