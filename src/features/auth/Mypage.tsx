@@ -3,6 +3,8 @@ import styles from "../../styles/auth.module.css";
 import { onAuthStateChanged, signOut, deleteUser, updateProfile, User } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
+import { deleteUserTasks } from "../../features/auth/api/deleteUserTasks"
+
 
 const Mypage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -27,11 +29,11 @@ const Mypage: React.FC = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      alert('ログアウトしました。');
-      navigate('/signin'); // ログアウト後、ログインページへリダイレクト
+      alert("ログアウトしました。");
+      navigate("/signin"); // ログアウト後、ログインページへリダイレクト
     } catch (error) {
-      console.error('ログアウトエラー:', error);
-      alert('ログアウトに失敗しました。');
+      console.error("ログアウトエラー:", error);
+      alert("ログアウトに失敗しました。");
     }
   };
 
@@ -51,10 +53,11 @@ const Mypage: React.FC = () => {
   const handleDeleteAccount = async () => {
     if (user) {
       try {
-        if (confirm('本当にアカウントを削除しますか？')) {
+        if (confirm("本当にアカウントを削除しますか？作成したタスクもすべて削除されます")) {
+          await deleteUserTasks(user.uid);
           await deleteUser(user);
-          alert('アカウントを削除しました。');
-          navigate('/signup'); // アカウント削除後、サインアップページへリダイレクト
+          alert("アカウントを削除しました。");
+          navigate("/signup"); // アカウント削除後、サインアップページへリダイレクト
         }
       } catch (error) {
         console.error('アカウント削除エラー:', error);
