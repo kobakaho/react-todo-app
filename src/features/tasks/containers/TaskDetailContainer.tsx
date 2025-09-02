@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTaskById } from "../hooks/getTaskById";
+import { getTaskById } from "../api/getTaskById";
 import { Task } from "../../../types/task";
 import TaskDetail from "../components/TaskDetail";
-import TaskDeleteButton from "../components/TaskDelete";
-import styles from "../styles/taskDetail.module.css";
 
 export default function TaskDetailContainer() {
-    const { id } = useParams<{ id?: string }>();
+    const { id } = useParams<{ id: string }>();
     // URLパラメータからタスクIDを取得
     const [task, setTask] = useState<Task | null>(null);
     // task の状態　まだ取得できていない間は null →　取得後に Task 型のデータで更新
@@ -16,20 +14,24 @@ export default function TaskDetailContainer() {
     // useEffect コンポーネントがマウントされた時にgetTaskById関数を実行してタスク情報を取得
     // getTaskById関数に、URLパラメータから取得したタスクIDを引数に渡すことで、指定されたタスクの情報を取得できる
     useEffect(() => {
-        if(!id) return;
-
+        if (!id) return;
         async function fetchTask() {
-            const fetchedTask = await getTaskById(id);
-            setTask(fetchedTask ?? null);
+            try {
+                const fetchedTask = await getTaskById(id!);
+                setTask(fetchedTask ?? null);
+            } catch (error) {
+                console.error("Error fetching task:", error);
+                setTask(null);
+            }
         }
         fetchTask();
     }, [id]);
     // setTask(fetchedTask ?? null);
     // 取得されたタスクが undefined の場合もあるため、?? 演算子で null に置き換え、安全に扱えるようにしている
-    
+
     if (!task) {
         return (
-            <div        
+            <div
             style={{
                 display: "flex",
                 justifyContent: "center",
@@ -42,11 +44,8 @@ export default function TaskDetailContainer() {
     }
 
     return (
-        <div className={styles.taskDetailContainer}>
+        <div>
             <TaskDetail task={task} /> {/* 取得したタスク情報をTaskDetailコンポーネントに渡す */}
-            <div>
-                <TaskDeleteButton id={task.id.toString()} />
-            </div>
         </div>
     );
 }

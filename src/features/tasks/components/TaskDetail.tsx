@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import styles from "../styles/taskDetail.module.css";
 import { getPriorityClass } from "../utils/priority";
 import { Task } from "../../../types/task";
+import TaskDeleteButton from "../components/TaskDelete";
+
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
@@ -21,14 +23,15 @@ export default function TaskDetail({ task }: Props) {
                 {task.priority}
                 </span>
             </p>
-            <p className={styles.info}>期限日: {task.dueDate}</p>
+            <p className={styles.info}>期限日: {task.dueDate ? task.dueDate : "今日"}</p>
             <p className={styles.info}>
-                作成日: {new Date(task.createdAt).toLocaleString()}
+                作成日: {task.updatedAt ? new Date(task.updatedAt).toLocaleString() : ""}
             </p>
             <p className={styles.info}>
-                更新日: {new Date(task.updatedAt).toLocaleString()}
+                更新日: {task.updatedAt ? new Date(task.updatedAt).toLocaleString() : ""}
             </p>
             <div className={styles.links}>
+                <TaskDeleteButton id={task.id.toString()} />
                 <Link to={`/tasks/${task.id}/edit`}>
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
                 <Fab color="secondary" aria-label="edit">

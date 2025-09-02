@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { getTasks } from "../hooks/getTasks";
-import { updateTask } from "../hooks/updateTask";
+import { getTasks } from "../api/getTasks";
+import { updateTask } from "../api/updateTask";
 import { Task } from "../../../types/task";
 import TaskList from "../components/TaskList";
 import styles from "../styles/TaskListContainer.module.css";

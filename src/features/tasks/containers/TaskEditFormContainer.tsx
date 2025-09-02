@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
-import { getTaskById } from "../hooks/getTaskById";
-import { updateTask } from "../hooks/updateTask";
-import styles from "../styles/taskForm.module.css";
+import { getTaskById } from "../api/getTaskById";
+import { updateTask } from "../api/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
 
 // TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
@@ -22,7 +21,7 @@ export default function TaskEditFormContainer() {
   // formDataステートに設定
   useEffect(() => {
     async function fetchTask() {
-      const task = await getTaskById(id);
+      const task = await getTaskById(id!);
       if (task) {
           setFormData({
             title: task.title,
@@ -40,9 +39,38 @@ export default function TaskEditFormContainer() {
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: "300px" }}>
         読み込み中...
+
       </div>
     );
   }
+{/*import * as React from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+
+export default function SimpleBackdrop() {
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  ローディングのUI
+  return (
+    <div>
+      <Button onClick={handleOpen}>Show backdrop</Button>
+      <Backdrop
+        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
+}
+  */}
 
   // handleChange関数
   // フォームの入力値が変更された際に、formDataステートを更新するための関数
@@ -70,16 +98,15 @@ export default function TaskEditFormContainer() {
 
 
   return (
-    <div className={styles.container}>
-      <h1>タスク編集</h1>
+    <div>
       <TaskForm 
         formData={formData} 
         onChange={handleChange} 
         onSubmit={handleSubmit}
         id={id}
       />
-      <div className={styles.cancelContainer}>
-        <Link to={`/tasks/${id}`} className={styles.cancelLink}>
+      <div>
+        <Link to={`/tasks/${id}`}>
           前の画面に戻る
         </Link>
       </div>
