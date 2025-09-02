@@ -25,10 +25,10 @@ export default function TaskDetail({ task }: Props) {
             </p>
             <p className={styles.info}>期限日: {task.dueDate ? task.dueDate : "今日"}</p>
             <p className={styles.info}>
-                作成日: {task.updatedAt ? new Date(task.updatedAt).toLocaleString() : ""}
+                作成日: {task.createdAt ? task.createdAt.toDate().toLocaleString() : ""}
             </p>
             <p className={styles.info}>
-                更新日: {task.updatedAt ? new Date(task.updatedAt).toLocaleString() : ""}
+                更新日: {task.updateAt ? task.updateAt.toDate().toLocaleString() : ""}
             </p>
             <div className={styles.links}>
                 <TaskDeleteButton id={task.id.toString()} />
