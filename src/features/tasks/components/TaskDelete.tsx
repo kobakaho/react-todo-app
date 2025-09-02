@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { deleteTask } from "../hooks/deleteTask";
-import styles from "../styles/taskDetail.module.css";
+import { deleteTask } from "../api/deleteTask";
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type props = {
     id? : string
@@ -22,8 +24,10 @@ export default function TaskDeleteButton({ id }: props) {
     };
 
     return (
-        <button className={styles.taskDeleteBtn} onClick={handleClick}>
-            タスクを削除
-        </button>
-    );
+    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }} onClick={handleClick}>
+      <IconButton aria-label="delete" size="large">
+        <DeleteIcon fontSize="inherit" />
+      </IconButton>
+    </Stack>
+ );
 }
