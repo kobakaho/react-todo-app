@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import PrivateRoute from "./features/auth/PrivateRoute";
+import NotFound from "./shared/components/NotFound";
 import Homepage from "./pages/home";
 import TaskListPage from "./pages/tasks/taskListPage";
 import TaskDetailPage from "./pages/tasks/taskDetailPage";
@@ -34,22 +35,23 @@ function App() {
 
   return (
       <Routes>
-        <Route element={<>{user ? <AuthHeader /> : <Header />}<Outlet /></>}>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
-        </Route>
+          <Route element={<>{user ? <AuthHeader /> : <Header />}<Outlet /></>}>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+          </Route>
 
-        <Route element={<PrivateRoute />}>
-            <Route element={<><AuthHeader /><Outlet /></>}>
-              <Route path="/mypage" element={<Mypage />} />
-              <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
-              <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
-              <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
-              <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
-            </Route>
-        </Route>
+          <Route element={<PrivateRoute />}>
+              <Route element={<><AuthHeader /><Outlet /></>}>
+                <Route path="/mypage" element={<Mypage />} />
+                <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
+                <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
+                <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
+                <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
+              </Route>
+          </Route>
+          <Route path="*" element={<NotFound />} />
       </Routes>
   );
 }
