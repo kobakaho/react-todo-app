@@ -2,11 +2,11 @@ import { TaskFormData } from "../../../types/task";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebase";
 
-export const updateTask = async (id: string, FormData: TaskFormData) => {
+export const updateTask = async (id: string, data: Partial<TaskFormData>) => {
   try{
     const taskRef = doc(db, "tasks", id);
     await updateDoc(taskRef, {
-        ...FormData,
+        ...data,
         updateAt: serverTimestamp(),
     });
     console.log("更新が成功しました。");
