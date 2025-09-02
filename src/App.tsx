@@ -1,4 +1,7 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 import PrivateRoute from "./features/auth/PrivateRoute";
 import Homepage from "./pages/home";
 import TaskListPage from "./pages/tasks/taskListPage";
@@ -6,6 +9,7 @@ import TaskDetailPage from "./pages/tasks/taskDetailPage";
 import TaskCreatePage from "./pages/tasks/taskCreatePage";
 import TaskEditPage from "./pages/tasks/taskEditPage";
 import Header from "./shared/components/Header";
+import AuthHeader from "./shared/components/AuthHeader";
 import SignUp from "./features/auth/SignUp";
 import SignIn from "./features/auth/SignIn";
 import ResetPassword from "./features/auth/ResetPassword";
@@ -13,26 +17,42 @@ import Mypage from "./features/auth/Mypage";
 import "./index.css"
 
 function App() {
+  const [user, setUser] = useState(auth.currentUser);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
-      <Header />
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
-          <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
-          <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
-          <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
+        <Route element={<>{user ? <AuthHeader /> : <Header />}<Outlet /></>}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
         </Route>
-        </Routes>
-    </>
+
+        <Route element={<PrivateRoute />}>
+            <Route element={<><AuthHeader /><Outlet /></>}>
+              <Route path="/mypage" element={<Mypage />} />
+              <Route path="/tasks" element={<TaskListPage />} />{/* タスク一覧ページへのルート */}
+              <Route path="/tasks/new" element={<TaskCreatePage />} />{/* タスク作成ページへのルート */}
+              <Route path="/tasks/:id" element={<TaskDetailPage />} />{/* タスク詳細ページへのルート */}
+              <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
+            </Route>
+        </Route>
+      </Routes>
   );
 }
-
 
 
 // default export 1つもモジュールにつき1つの「主要な」をエクスポートする場合に使用する

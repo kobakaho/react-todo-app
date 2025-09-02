@@ -19,7 +19,7 @@ const SignUp: React.FC = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('登録が完了しました！');
-      navigate('/mypage'); // 登録成功後、マイページへリダイレクト
+      navigate('/tasks'); // 登録成功後、マイページへリダイレクト
     } catch (err: any) {
       console.error('サインアップエラー:', err);
       // Firebaseのエラーコードに基づいてメッセージを調整
