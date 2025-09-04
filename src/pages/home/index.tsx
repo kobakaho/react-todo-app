@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import styles from "../../styles/home.module.css";
 
 export default function Homepage() {
@@ -8,9 +10,13 @@ export default function Homepage() {
       <p className={styles.description}>
         React×Vite×React Routerで作るタスク管理アプリです。
       </p>
-      <Link to="/tasks" className={styles.link}>
-        始める
-      </Link>
+      <Stack direction="row" spacing={2}>
+        <Link to="/tasks">
+          <Button variant="contained" color="secondary" size="large">
+            タスク管理を始める
+          </Button>
+        </Link>
+      </Stack>
     </div>
  )
 }

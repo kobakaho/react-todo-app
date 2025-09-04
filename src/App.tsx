@@ -1,5 +1,5 @@
-import { Route, Routes, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Route, Routes, Outlet } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import PrivateRoute from "./features/auth/PrivateRoute";
