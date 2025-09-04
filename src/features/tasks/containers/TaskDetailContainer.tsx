@@ -35,10 +35,9 @@ export default function TaskDetailContainer() {
     }
 
     return (
-        <div>
-            <TaskDetail task={task} /> {/* 取得したタスク情報をTaskDetailコンポーネントに渡す */}
-        </div>
+        <TaskDetail task={task} /> 
     );
 }
 // タスク情報が取得できていない場合は、ローディング表示
+        {/* 取得したタスク情報をTaskDetailコンポーネントに渡す */}
 
