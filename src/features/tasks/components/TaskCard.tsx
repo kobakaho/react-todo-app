@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import styles from "../styles/taskCard.module.css";
 import { getPriorityClass } from "../utils/priority";
 import { Task } from "../../../types/task";
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import styles from "../styles/taskCard.module.css";
 
 type Props = {
     task: Task;
@@ -26,10 +28,16 @@ export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleS
         <h3 className={styles.taskTitle}>{task.title}</h3>
       </Link>
         <p className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>{task.priority}</p>
-        <p className={styles.dueDate}>～ {task.dueDate ? task.dueDate : "今日"}</p>
+        <Stack direction="row" spacing={1}>
+        <Chip
+            variant="outlined"
+            color="success"
+            label={`～ ${task.dueDate ? task.dueDate : "今日"}`}
+            className={styles.info}
+        />
+        </Stack>
     </div>
-
-    );
+  );
 }
 // タスクのステータスに応じてスタイルを適用
 //　可読性を向上するためのコンポーネント分割

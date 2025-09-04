@@ -1,5 +1,8 @@
 import { TaskFormData } from "../../../types/task";
 import styles from "../styles/taskForm.module.css";
+import DoneIcon from '@mui/icons-material/Done';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 
 // props コンポーネント間でデータや関数をやり取りすることができる
 type Props = {
@@ -21,7 +24,8 @@ type Props = {
 // TaskFormコンポーネント タスク作成フォームを表示
 export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
     return (
-        <form onSubmit={onSubmit} className={styles.form}>
+
+        <form onSubmit={onSubmit} className={styles.container}>
             <div className={styles.formGroup}>
                 <label>タイトル:</label>
                 <input
@@ -61,9 +65,20 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
                     onChange={onChange}
                 />
             </div>
-            <button type="submit" className={styles.submitButton}>
-                {id ? "更新" : "作成"} {/* idが存在する場合は「更新する」、存在しない場合は「作成する」 */}
-            </button>
+            <div className={styles.Button}>
+                {id ? (
+                <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                    <Fab color="secondary" aria-label="edit" type="submit">
+                        <DoneIcon />
+                    </Fab>
+                </Box>
+                ) : (
+                <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                    <Fab color="primary" aria-label="edit" type="submit">
+                        <DoneIcon />
+                    </Fab>
+                </Box>)}
+            </div>
         </form>
     );
 }
