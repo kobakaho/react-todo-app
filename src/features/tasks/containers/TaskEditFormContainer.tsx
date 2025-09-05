@@ -1,13 +1,25 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { getTaskById } from "../api/getTaskById";
 import { updateTask } from "../api/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
-import TaskForm from "../components/TaskForm";
 import Circular from "../../../shared/components/Circular"
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import Button from '@mui/material/Button';
+import TaskForm from "../components/TaskForm";
+import styles from "../styles/taskForm.module.css";
 
 // TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
-export default function TaskEditFormContainer() {
+export default function TaskEditFormContainer({
+    open,
+    onClose,
+}: {
+    open: boolean;
+    onClose: () => void;
+    id: string;
+}) {
 
   // useParamsフックを使用して、URLパラメータからタスクIDを取得
   // useParams<{ id?: string }>() のように TypeScriptのジェネリクスを使って型注釈を行うことで
@@ -15,12 +27,12 @@ export default function TaskEditFormContainer() {
   // これにより、型安全なコーディングが可能になる
   const { id } = useParams<{ id?: string }>(); //編集時にはidが必要なためidを渡す
   const [ formData, setFormData ] = useState<TaskFormData | null>(null);
-  const navigate = useNavigate();
 
   // useEffectフックを使用
   // コンポーネントがマウントされた際に、getTaskById関数を使用して指定されたIDのタスクデータを取得
   // formDataステートに設定
   useEffect(() => {
+    if (!id) return;
     async function fetchTask() {
       const task = await getTaskById(id!);
       if (task) {
@@ -61,22 +73,25 @@ export default function TaskEditFormContainer() {
     if (!id) return;
     e.preventDefault();
       await updateTask(id, formData);
-      navigate(`/tasks/${id}`);
+      onClose();
   };
 
-
   return (
-    <div>
-      <TaskForm 
-        formData={formData} 
-        onChange={handleChange} 
-        onSubmit={handleSubmit}
-        id={id}
-      />
+    <div className={styles.formContainer}>
       <div>
-        <Link to={`/tasks/${id}`}>
-          前の画面に戻る
-        </Link>
+        <Dialog open={open} onClose={onClose}>
+          <DialogActions>
+              <Button onClick={onClose}>キャンセル</Button>
+          </DialogActions>
+          <DialogContent>
+          <TaskForm
+              formData={formData}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              id={id}
+          />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
