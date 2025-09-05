@@ -14,12 +14,18 @@
   gap: 1rem;
   align-items: right;
   justify-content: flex-end;
-  bottom: 40px; /* 下からの距離 */
-  right: 40px;  /* 右からの距離 */
+}
+
+.formContainer {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 .formGroup {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .formGroup label {
@@ -27,13 +33,4 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #333;
-}
-
-.formGroup input,
-.formGroup textarea,
-.formGroup select {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
 }

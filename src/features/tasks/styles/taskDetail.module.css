@@ -52,20 +52,10 @@
   color: #065f46;
 }
 
-.Button {
-  display: flex;
-  gap: 1rem;
-  align-items: right;
-  justify-content: flex-end;
-  bottom: 40px; /* 下からの距離 */
-  right: 40px;  /* 右からの距離 */
-}
-
 .backButton {
   display: flex;
   right: 40px;  /* 右からの距離 */
   align-items: right;
   justify-content: flex-end;
   margin-bottom: 15px;
-;
 }
