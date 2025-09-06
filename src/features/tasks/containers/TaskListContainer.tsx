@@ -9,8 +9,9 @@ import Circular from "../../../shared/components/Circular"
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import styles from "../styles/TaskListContainer.module.css";
 import TaskFormContainer from "./TaskFormContainer";
+import Tooltip from '@mui/material/Tooltip';
+import styles from "../styles/TaskListContainer.module.css";
 
 export default function TaskListContainer() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -55,14 +56,16 @@ export default function TaskListContainer() {
     return (
         <div className={styles.Container}>
             <div className={styles.Button}>
+            <Tooltip title="新規作成">
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
                 <Fab color="primary" aria-label="add" onClick={() => {setOpen(true)}}>
                     <AddIcon />
                 </Fab>
                 </Box>
-                <TaskFormContainer open={open} onClose={() => {setOpen(false)}} />
-            </div>
 
+            </Tooltip>
+            <TaskFormContainer open={open} onClose={() => {setOpen(false)}} />
+            </div>
             <TaskFilter
                 filter={filter}
                 setFilter={setFilter}
@@ -76,3 +79,4 @@ export default function TaskListContainer() {
         </div>
     );
 }
+

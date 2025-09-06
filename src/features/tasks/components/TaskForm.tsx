@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
 import styles from "../styles/taskForm.module.css";
 
 // props コンポーネント間でデータや関数をやり取りすることができる
@@ -88,6 +89,7 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
                 />
             </div>
             <div className={styles.Button}>
+                <Tooltip title={id ? "更新する" : "登録する"}>
                 {id ? (
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
                     <Fab color="secondary" aria-label="edit" type="submit">
@@ -100,6 +102,8 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
                         <DoneIcon />
                     </Fab>
                 </Box>)}
+
+                    </Tooltip>
             </div>
         </form>
     );

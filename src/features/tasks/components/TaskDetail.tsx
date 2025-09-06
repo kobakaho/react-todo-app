@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import TaskEditFormContainer from "../containers/TaskEditFormContainer";
+import Tooltip from '@mui/material/Tooltip';
 import styles from "../styles/taskDetail.module.css";
 
 type Props = {
@@ -23,13 +24,15 @@ export default function TaskDetail({ task }: Props) {
     return (
     <div className={styles.container}>
         <div className={styles.backButton}>
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                <Link to="/tasks">
-                    <IconButton aria-label="delete" size="large">
-                        <ClearIcon fontSize="inherit" />
-                    </IconButton>
-                </Link>
-            </Stack>
+            <Tooltip title="戻る">
+                <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                    <Link to="/tasks">
+                        <IconButton aria-label="delete" size="large">
+                            <ClearIcon fontSize="inherit" />
+                        </IconButton>
+                    </Link>
+                </Stack>
+            </Tooltip>
         </div>
         <h1 className={styles.title}>{task.title}</h1>
         <p className={styles.description}>{task.description}</p>
@@ -59,11 +62,13 @@ export default function TaskDetail({ task }: Props) {
         <div className={styles.backButton}>
             <TaskDeleteButton id={task.id.toString()} />
 
-            <Box sx={{ '& > :not(style)': { m: 1 } }}>
-            <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
-                <EditIcon />
-            </Fab>
-            </Box>
+            <Tooltip title="更新する">
+                <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
+                    <EditIcon />
+                </Fab>
+                </Box>
+            </Tooltip>
             <TaskEditFormContainer open={open} onClose={() => {setOpen(false)}} id={task.id} />
         </div>
     </div>

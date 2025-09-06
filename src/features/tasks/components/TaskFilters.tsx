@@ -2,25 +2,26 @@ import React from "react";
 import IconButton from '@mui/material/IconButton';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
 import styles from "../styles/TaskListContainer.module.css";
 
 
 type Props = {
-  filter: {
+    filter: {
     priority?: string;
     status?: string;
     dueDate?: "past" | "today" | "upcoming";
-  };
-  setFilter: React.Dispatch<React.SetStateAction<{
+    };
+    setFilter: React.Dispatch<React.SetStateAction<{
     priority?: string;
     status?: string;
     dueDate?: "past" | "today" | "upcoming";
-  }>>;
-  sortKey: "createdAt" | "dueDate";
-  setSortKey: React.Dispatch<React.SetStateAction<"createdAt" | "dueDate">>;
-  sortOrder: "asc" | "desc";
-  setSortOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
-  handleToggleSort: () => void;
+    }>>;
+    sortKey: "createdAt" | "dueDate";
+    setSortKey: React.Dispatch<React.SetStateAction<"createdAt" | "dueDate">>;
+    sortOrder: "asc" | "desc";
+    setSortOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+    handleToggleSort: () => void;
 };
 
 export function TaskFilter({
@@ -82,18 +83,20 @@ export function TaskFilter({
                     <option value="createdAt">作成日</option>
                     <option value="dueDate">期限日</option>
                 </select>
+                <Tooltip title={ sortOrder === "desc" ? "降順" : "昇順"}>
+                    <IconButton
+                        aria-label="toggle sort"
+                        size="large"
+                        onClick={handleToggleSort}
+                        sx={{
+                        transition: "transform 0.3s ease",
+                        transform: sortOrder === "desc" ? "rotate(180deg)" : "rotate(0deg)",
+                        }}
+                    >
+                        <FilterListIcon />
+                    </IconButton>
+                </Tooltip>
 
-                <IconButton
-                    aria-label="toggle sort"
-                    size="large"
-                    onClick={handleToggleSort}
-                    sx={{
-                    transition: "transform 0.3s ease",
-                    transform: sortOrder === "desc" ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                >
-                    <FilterListIcon />
-                </IconButton>
             </div>
         </div>
     </div>
