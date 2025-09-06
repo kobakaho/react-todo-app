@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Circular from "../../shared/components/Circular";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import { auth } from "../../firebase";
@@ -18,7 +19,7 @@ const PrivateRoute: React.FC = () => {
     }, []);
 
     if (loading) {
-        return <div>認証確認中...</div>;
+        return <Circular />;
     }
 
     // ユーザーがいれば子ルート（Outlet）を表示、いなければログインページへリダイレクト

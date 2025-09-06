@@ -1,24 +1,35 @@
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
+import { Link, useNavigate } from 'react-router-dom';
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 export default function AuthHeader() {
     const navigate = useNavigate();
 
     return (
-        <header className={styles.header}>
-            <h1 className={styles.logo}>
-                <Link to="/">タスク管理アプリ</Link>
-            </h1>
-            <nav className={styles.nav}>
-                <ul className={styles.navList}>
+        <header>
+        <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+            <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                タスク管理アプリ
+                </Link>
+            </Typography>
+            <Stack spacing={2} direction="row">
+                <Button variant="outlined"  color="inherit" onClick={() => navigate("/tasks")}>タスク一覧</Button>
                 <IconButton size="large" onClick={() => navigate("/mypage")}>
                     <SettingsIcon />
                 </IconButton>
-                </ul>
-            </nav>
+            </Stack>
+            </Toolbar>
+        </AppBar>
+        </Box>
         </header>
     );
 }

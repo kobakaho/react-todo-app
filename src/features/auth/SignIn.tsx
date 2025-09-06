@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import styles from "../../styles/auth.module.css";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase'; // authインスタンスをインポート
-import { Link, useNavigate } from 'react-router-dom';
+import Divider from '@mui/material/Divider';
+import styles from "../../styles/auth.module.css";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,10 +14,11 @@ const SignIn: React.FC = () => {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); // エラーをリセット
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert('ログインしました！');
-      navigate('/tasks'); // ログイン成功後、マイページへリダイレクト
+      navigate('/tasks');
     } catch (err: any) {
       console.error('サインインエラー:', err);
       // Firebaseのエラーコードに基づいてメッセージを調整
@@ -33,6 +35,8 @@ const SignIn: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>ログイン</h2>
+      <Divider variant="middle" sx={{ mb: 2, mt: 2 }} />
+
       <form onSubmit={handleSignIn}>
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>メールアドレス:</label>
@@ -59,9 +63,12 @@ const SignIn: React.FC = () => {
         {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>ログイン</button>
       </form>
+      <Link to="/signup" className={styles.linkButton}>新規登録</Link>
+      <div className={styles.link}>
+      <Link to="/resetpassword">パスワードをお忘れの方はこちら</Link>
+      </div>
 
-      <Link to="/resetpassword">パスワードをお忘れですか？</Link>
-    </div>  
+    </div>
   );
 };
 

@@ -1,6 +1,9 @@
 .container {
-  max-width: 800px;
-  margin: 0 auto;
+  display: flex;              /* Flexboxを有効化 */
+  flex-direction: column;     /* 縦に積む */
+  justify-content: center;    /* 縦方向中央 */
+  align-items: center;        /* 横方向中央 */
+  min-height: 70vh;          /* 画面の高さ */
   padding: 2rem;
   text-align: center;
 }
@@ -15,26 +18,4 @@
   font-size: 1.2rem;
   color: #666;
   margin-bottom: 2rem;
-}
-
-.link {
-  display: block;              /* 横並び→縦並びに */
-  width: fit-content;          /* ボタン幅を内容に合わせる */
-  margin: 0 auto 1.2rem auto;  /* 下に間隔を広げ中央寄せ */
-  background-color: #0070f3;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-.link:last-child {
-  background-color: #ec89ee;
-}
-.link:hover {
-  background-color: #0051bb;
-}
-.link:last-child:hover {
-  background-color: #d24fd4;
 }

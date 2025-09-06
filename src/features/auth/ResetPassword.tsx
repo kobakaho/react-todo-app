@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import styles from "../../styles/auth.module.css";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '../../firebase'; // authインスタンスをインポート
-import { useNavigate } from 'react-router-dom';
+import Divider from '@mui/material/Divider';
+import styles from "../../styles/auth.module.css";
 
 const ResetPassword: React.FC = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
+
 
     const handleForgotPassword = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
-        setSuccessMessage('');
 
         if (!email) {
             setError('メールアドレスを入力してください。');
@@ -21,7 +21,8 @@ const ResetPassword: React.FC = () => {
         }
         try {
             await sendPasswordResetEmail(auth, email);
-            setSuccessMessage('パスワード再設定用のメールを送信しました。迷惑メールに振り分けられる可能性があります。');
+            alert('パスワード再設定用のメールを送信しました。迷惑メールに振り分けられる可能性があります。');
+            navigate('/signin'); // ログイン成功後、マイページへリダイレクト
             } catch (err: any) {
             console.error('パスワード再設定エラー:', err);
             if (err.code === 'auth/user-not-found') {
@@ -37,13 +38,13 @@ const ResetPassword: React.FC = () => {
     return (
         <div className={styles.container}>
         <h2 className={styles.title}>パスワードリセット</h2>
-        <form onSubmit={handleForgotPassword} className={styles.form}>
-            {successMessage && <p className={styles.success}>{successMessage}</p>}
+        <Divider variant="middle" sx={{ mb: 2, mt: 2 }} />
+        <form onSubmit={handleForgotPassword}>
             {error && <p className={styles.error}>{error}</p>}
 
-            <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.label}>メールアドレス:</label>
-            <input
+            <div className={styles.formGroup}>
+                <input
                 type="email"
                 id="email"
                 value={email}
@@ -54,7 +55,9 @@ const ResetPassword: React.FC = () => {
             </div>
             <button type="submit" className={styles.button}>メール送信</button>
         </form>
-        <button type="button" onClick={() => navigate("/signin")} className={styles.linkButton}>ログイン画面に戻る</button>
+        <div className={styles.link}>
+            <Link to="/signin">ログイン画面に戻る</Link>
+        </div>
         </div>
     );
 };

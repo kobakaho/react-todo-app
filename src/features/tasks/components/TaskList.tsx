@@ -2,12 +2,12 @@ import { Task } from "../../../types/task";
 import TaskCard from "./TaskCard";
 import styles from "../styles/TaskListContainer.module.css";
 
-interface TaskListProps {
+type Props = {
   tasks: Task[];
   onToggleStatus: (taskId: Task['id'], newStatus: boolean) => void;
 }
 
-export default function TaskList({ tasks, onToggleStatus }: TaskListProps) {
+export default function TaskList({ tasks, onToggleStatus }: Props) {
   return (
     <div>
       <div className={styles.taskList}>
