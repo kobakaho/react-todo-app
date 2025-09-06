@@ -4,6 +4,7 @@ import { Task } from "../../../types/task";
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 import styles from "../styles/taskCard.module.css";
 
 type Props = {
@@ -19,11 +20,13 @@ export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleS
 
   return (
     <div className={`${styles.taskCard} ${task.status ? styles.completed : ""}`}>
-      <Checkbox
-        checked={task.status}
-        onChange={() => onToggleStatus(task.id, !task.status)}
-        sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
-      />
+      <Tooltip title={task.status ? "完了を取り消す" : "完了する"}>
+        <Checkbox
+          checked={task.status}
+          onChange={() => onToggleStatus(task.id, !task.status)}
+          sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+        />
+      </Tooltip>
       <Link to={`/tasks/${task.id}`} className={styles.detailLink}>
         <h3 className={styles.taskTitle}>{task.title}</h3>
       </Link>
