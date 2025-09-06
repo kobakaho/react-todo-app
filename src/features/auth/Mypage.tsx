@@ -18,7 +18,7 @@ const Mypage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Mypage: React.FC = () => {
       try{
         await updateProfile(auth.currentUser, { displayName: username, photoURL: auth.currentUser.photoURL });
         alert("プロフィールが更新されました");
-        setDialogOpen(false);
+        setOpen(false);
       } catch (error) {
         console.error("プロフィールの更新に失敗しました:", error);
         alert("プロフィールの更新に失敗しました");
@@ -84,10 +84,10 @@ const Mypage: React.FC = () => {
 
       {user ? <p>こんにちは、{user.displayName || '名無し'}さん！</p> : <p>ログインしていません。</p>}
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button  variant="outlined" onClick={() => {setDialogOpen(true)}}>ユーザー名を変更</Button>
+        <Button  variant="outlined" onClick={() => {setOpen(true)}}>ユーザー名を変更</Button>
       </div>
 
-      <Dialog open={dialogOpen} onClose={() => {setDialogOpen(false)}}>
+      <Dialog open={open} onClose={() => {setOpen(false)}}>
         <DialogTitle>ユーザー名を変更</DialogTitle>
         <DialogContent>
           <TextField
@@ -98,7 +98,7 @@ const Mypage: React.FC = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {setDialogOpen(false)}}>キャンセル</Button>
+          <Button onClick={() => {setOpen(false)}}>キャンセル</Button>
           <Button onClick={handleUpdateProfile}>更新</Button>
         </DialogActions>
       </Dialog>

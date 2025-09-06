@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { getTasks } from "../api/getTasks";
 import { updateTask } from "../api/updateTask";
 import { Task } from "../../../types/task";
@@ -28,33 +28,21 @@ export default function TaskListContainer() {
     const handleToggleSort = () => {
         setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
     };
-    const fetchTasks = useCallback(async () => {
-        try {
-            setLoading(true);
-            setError(null);
-
-            let allTasks = await getTasks();
-            allTasks = applyFilter(allTasks, filter);
-            allTasks = sortTasks(allTasks, sortKey, sortOrder);
-            setTasks(allTasks);
-
-        } catch (err) {
-            setError("タスクの作成に失敗しました。");
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [filter, sortKey, sortOrder]);
 
     useEffect(() => {
-        fetchTasks();
-    }, [fetchTasks]);
+        const unsubscribe = getTasks((allTasks) => {
+            let filteredTasks = applyFilter(allTasks, filter);
+            filteredTasks = sortTasks(filteredTasks, sortKey, sortOrder);
+            setTasks(filteredTasks);
+            setLoading(false);
+        });
+        return () => unsubscribe();
+    }, [filter, sortKey, sortOrder]);
 
     const handleToggleStatus = async (taskId: Task['id'], newStatus: boolean) => {
         try {
             await updateTask(String(taskId), { status: newStatus });
             // 状態更新が成功したら、リストを再読み込みして分類し直す
-            await fetchTasks();
         } catch (error) {
             setError("タスクの更新に失敗しました。");
             console.error("タスクの更新に失敗しました。", error);

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { createTask } from "../api/createTask";
 import { TaskFormData } from "../../../types/task";
 import TaskForm from "../components/TaskForm";
@@ -29,10 +28,6 @@ export default function TaskFormContainer({
         status: false // 初期値は未完了
     }); // 初期値
 
-    // タスク一覧ページにリダイレクトするためのnavigate関数を取得
-    // タスク作成後にタスク一覧ページに遷移
-    const navigate = useNavigate();
-
     // 各フォーム要素の変更時に呼ばれ、formDataを更新
     // priorityは、Priorityという文字列リテラル型に変換する必要がある
     const handleChange = (
@@ -46,8 +41,8 @@ export default function TaskFormContainer({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await createTask(formData);
+        alert("タスクが作成されました");
         onClose();
-        navigate("/tasks");
     };
 
 

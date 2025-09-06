@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import {  useParams } from "react-router-dom";
 import { getTaskById } from "../api/getTaskById";
 import { updateTask } from "../api/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
@@ -15,6 +14,7 @@ import styles from "../styles/taskForm.module.css";
 export default function TaskEditFormContainer({
     open,
     onClose,
+    id,
 }: {
     open: boolean;
     onClose: () => void;
@@ -25,18 +25,16 @@ export default function TaskEditFormContainer({
   // useParams<{ id?: string }>() のように TypeScriptのジェネリクスを使って型注釈を行うことで
   // idがstring型であること（あるいは存在しない可能性）を明示
   // これにより、型安全なコーディングが可能になる
-  const { id } = useParams<{ id?: string }>(); //編集時にはidが必要なためidを渡す
+  //const { id } = useParams<{ id?: string }>(); //編集時にはidが必要なためidを渡す
   const [ formData, setFormData ] = useState<TaskFormData | null>(null);
 
   // useEffectフックを使用
   // コンポーネントがマウントされた際に、getTaskById関数を使用して指定されたIDのタスクデータを取得
   // formDataステートに設定
   useEffect(() => {
-    if (!id) return;
-    async function fetchTask() {
-      const task = await getTaskById(id!);
+    const unsubscribe = getTaskById(id!, (task) => {
       if (task) {
-          setFormData({
+        setFormData({
             title: task.title,
             description: task.description,
             priority: task.priority,
@@ -44,8 +42,8 @@ export default function TaskEditFormContainer({
             status: task.status
           });
       }
-    };
-    fetchTask();
+    });
+    return () => unsubscribe();
   }, [id]);
 
   if (!formData) {
@@ -73,6 +71,7 @@ export default function TaskEditFormContainer({
     if (!id) return;
     e.preventDefault();
       await updateTask(id, formData);
+      alert("タスクが更新されました");
       onClose();
   };
 
