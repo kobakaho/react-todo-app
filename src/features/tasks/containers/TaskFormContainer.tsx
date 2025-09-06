@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createTask } from "../api/createTask";
 import { TaskFormData } from "../../../types/task";
 import TaskForm from "../components/TaskForm";
@@ -36,12 +37,15 @@ export default function TaskFormContainer({
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+    const navigate = useNavigate();
+
 
     // フォームが送信された際に、createTask関数を実行して新しいタスクを作成し、タスク一覧ページにリダイレクトする処理
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await createTask(formData);
         alert("タスクが作成されました");
+        navigate("/tasks");
         onClose();
     };
 
