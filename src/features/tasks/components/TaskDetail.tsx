@@ -36,40 +36,50 @@ export default function TaskDetail({ task }: Props) {
         </div>
         <h1 className={styles.title}>{task.title}</h1>
         <p className={styles.description}>{task.description}</p>
-        <p className={styles.info}>
+        <div className={styles.info}>
             優先度 :{" "}
             <span className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>
             {task.priority}
             </span>
-        </p>
-        <Stack direction="row" spacing={1}>
-            <p className={styles.info}>
-                期限日 :{" "}
+            期限日 :
             <Chip
                 variant="outlined"
                 color="success"
-                label={`${task.dueDate ? task.dueDate : "今日"}`}
+                label={`～ ${task.dueDate ? task.dueDate : "今日"}`}
                 className={styles.badge}
             />
-            </p>
-        </Stack>
-        <p className={styles.info}>
-            作成日: {task.createdAt ? task.createdAt.toDate().toLocaleString() : ""}
-        </p>
-        <p className={styles.info}>
-            更新日: {task.updateAt ? task.updateAt.toDate().toLocaleString() : ""}
-        </p>
-        <div className={styles.backButton}>
-            <TaskDeleteButton id={task.id.toString()} />
+        </div>
+        期限が指定されてたらTodo出す
 
-            <Tooltip title="更新する">
-                <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
-                    <EditIcon />
-                </Fab>
-                </Box>
-            </Tooltip>
-            <TaskEditFormContainer open={open} onClose={() => {setOpen(false)}} id={task.id} />
+        <div className={styles.infoRow}>
+            <div className={styles.leftGroup}>
+                <Chip
+                    disabled
+                    size="small"
+                    label={
+                        <div>作成日: {task.createdAt ? task.createdAt.toDate().toLocaleString() : ""}</div>
+                    }
+                />
+                <Chip
+                    disabled
+                    size="small"
+                    label={
+                        <div>更新日: {task.updateAt ? task.updateAt.toDate().toLocaleString() : ""}</div>
+                    }
+                />
+            </div>
+            <div className={styles.rightGroup}>
+                <TaskDeleteButton id={task.id.toString()} />
+
+                <Tooltip title="更新する">
+                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                    <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
+                        <EditIcon />
+                    </Fab>
+                    </Box>
+                </Tooltip>
+                <TaskEditFormContainer open={open} onClose={() => {setOpen(false)}} id={task.id} />
+            </div>
         </div>
     </div>
     );

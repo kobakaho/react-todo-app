@@ -3,6 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
 import styles from "../styles/TaskListContainer.module.css";
 
 
@@ -36,68 +38,64 @@ export function TaskFilter({
     return (
     <div className={styles.FilterContainer}>
         <div className={styles.FilterItem}>
-            <div>
-            <label>ステータス:　</label>
-            <select
+            <label>ステータス:</label>
+            <Select
                 value={filter.status || ""}
-                onChange={e => setFilter({ ...filter, status: e.target.value as any })}
+                onChange={(e, value) => setFilter({ ...filter, status: value || undefined })}
+                size="sm"
             >
-                <option value="">すべて</option>
-                <option value="未完了">未完了</option>
-                <option value="完了">完了</option>
-            </select>
-            </div>
+                <Option value="">すべて</Option>
+                <Option value="未完了">未完了</Option>
+                <Option value="完了">完了</Option>
+            </Select>
 
-            <div>
-            <label>優先度:　</label>
-            <select
+            <label>優先度:</label>
+            <Select
                 value={filter.priority || ""}
-                onChange={e => setFilter({ ...filter, priority: e.target.value })}
-            >
-                <option value="">すべて</option>
-                <option value="high">高</option>
-                <option value="medium">中</option>
-                <option value="low">低</option>
-            </select>
-            </div>
+                onChange={(e, value) => setFilter({ ...filter, priority: value || undefined })}
+                size="sm"
+    >
+                <Option value="">すべて</Option>
+                <Option value="high">高</Option>
+                <Option value="medium">中</Option>
+                <Option value="low">低</Option>
+            </Select>
 
-            <div>
-            <label>期限日:　</label>
-            <select
+            <label>期限日:</label>
+            <Select
                 value={filter.dueDate || ""}
-                onChange={e => setFilter({ ...filter, dueDate: e.target.value as "past" | "today" | "upcoming" })}
-                >
-                <option value="">すべて</option>
-                <option value="past">期限切れ</option>
-                <option value="today">今日</option>
-                <option value="upcoming">今後</option>
-            </select>
-            </div>
-            <Divider orientation="vertical" variant="middle" flexItem />
-            <div>
-            <label>ソート基準:　</label>
-                <select
-                    value={sortKey}
-                    onChange={e => setSortKey(e.target.value as "createdAt" | "dueDate")}
-                >
-                    <option value="createdAt">作成日</option>
-                    <option value="dueDate">期限日</option>
-                </select>
-                <Tooltip title={ sortOrder === "desc" ? "降順" : "昇順"}>
-                    <IconButton
-                        aria-label="toggle sort"
-                        size="large"
-                        onClick={handleToggleSort}
-                        sx={{
-                        transition: "transform 0.3s ease",
-                        transform: sortOrder === "desc" ? "rotate(180deg)" : "rotate(0deg)",
-                        }}
-                    >
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
+                onChange={(e, value) => setFilter({ ...filter, dueDate: value as "past" | "today" | "upcoming" })}
+                size="sm"
+    >
+                <Option value="">すべて</Option>
+                <Option value="past">期限切れ</Option>
+                <Option value="today">今日</Option>
+                <Option value="upcoming">今後</Option>
+            </Select>
+            <Divider orientation="vertical" variant="middle" flexItem sx={{ mx: 2 }} />
 
-            </div>
+            <label>ソート基準:</label>
+            <Select
+                value={sortKey}
+                onChange={(e, value) => setSortKey(value as "createdAt" | "dueDate")}
+                size="sm"
+    >
+                <Option value="createdAt">作成日</Option>
+                <Option value="dueDate">期限日</Option>
+            </Select>
+            <Tooltip title={ sortOrder === "desc" ? "降順" : "昇順"}>
+                <IconButton
+                    aria-label="toggle sort"
+                    size="large"
+                    onClick={handleToggleSort}
+                    sx={{
+                    transition: "transform 0.3s ease",
+                    transform: sortOrder === "desc" ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                >
+                    <FilterListIcon />
+                </IconButton>
+            </Tooltip>
         </div>
     </div>
     )

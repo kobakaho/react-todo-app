@@ -9,7 +9,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Button from '@mui/material/Button';
 import TaskForm from "../components/TaskForm";
-import styles from "../styles/taskForm.module.css";
 
 // TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
 export default function TaskEditFormContainer({
@@ -80,22 +79,18 @@ export default function TaskEditFormContainer({
   };
 
   return (
-    <div className={styles.formContainer}>
-      <div>
-        <Dialog open={open} onClose={onClose}>
-          <DialogActions>
-              <Button onClick={onClose}>キャンセル</Button>
-          </DialogActions>
-          <DialogContent>
-          <TaskForm
-              formData={formData}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              id={id}
-          />
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
+      <Dialog open={open} onClose={onClose}>
+        <DialogActions>
+            <Button onClick={onClose}>キャンセル</Button>
+        </DialogActions>
+        <DialogContent>
+        <TaskForm
+            formData={formData}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            id={id}
+        />
+        </DialogContent>
+      </Dialog>
   );
 }
