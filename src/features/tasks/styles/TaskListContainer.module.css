@@ -1,7 +1,7 @@
 .Container {
-    padding: 20px;
-    max-width: 900px;
-    margin: 0 auto;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .Button {
@@ -17,46 +17,33 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;  /* 縦方向に並べる */
-  gap: 12px;               /* 行間のスペース */
   margin-bottom: 20px;
 }
 
 .FilterContainer .FilterItem {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; /* 両端の余白も含めて均等配置 */
+  justify-content: space-around;/*  両端の余白も含めて均等配置 */
   align-items: center;
-  gap: 2px; /* アイテム間の最小間隔 */
 }
 
-/* label と select の基本スタイル */
 .FilterContainer label {
   font-weight: 500;
   font-size: 0.9rem;
 }
 
-.FilterContainer select {
-  padding: 4px 8px;
-  font-size: 0.9rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #fff;
-  min-width: 100px;
-}
-
 .taskList {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .section {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .emptyMessage, .message {
-    color: #888;
-    text-align: center;
-    padding: 20px;
+  color: #888;
+  text-align: center;
+  padding: 20px;
 }
 
 .taskList {
