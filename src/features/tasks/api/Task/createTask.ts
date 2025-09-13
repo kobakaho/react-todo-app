@@ -1,6 +1,6 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db, auth } from "../../../firebase";
-import { TaskFormData } from "../../../types/task"
+import { db, auth } from "../../../../firebase";
+import { TaskFormData } from "../../../../types/task"
 
 export const createTask = async (task: TaskFormData) => {
     const user = auth.currentUser;

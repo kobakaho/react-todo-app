@@ -1,6 +1,6 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db, auth } from "../../../firebase";
-import { Task } from "../../../types/task";
+import { db, auth } from "../../../../firebase";
+import { Task } from "../../../../types/task";
 
 export const getTasks = (callback: (tasks: Task[]) => void) => {
     const user = auth.currentUser;
