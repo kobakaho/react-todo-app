@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getPriorityClass } from "../utils/priority";
 import { Task } from "../../../types/task";
+import TodoDetail from "../containers/TodoDetailContainer"
 import TaskDeleteButton from "../components/TaskDelete";
-import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import Chip from '@mui/material/Chip';
@@ -12,6 +12,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import TaskEditFormContainer from "../containers/TaskEditFormContainer";
 import Tooltip from '@mui/material/Tooltip';
+import Switch from "@mui/material/Switch";
 import styles from "../styles/taskDetail.module.css";
 
 type Props = {
@@ -20,6 +21,9 @@ type Props = {
 
 export default function TaskDetail({ task }: Props) {
     const [open, setOpen] = useState(false);
+    const [forceShow, setForceShow] = useState(false);
+
+    const isToday = task.dueDate === new Date().toISOString().split('T')[0];
 
     return (
     <div className={styles.container}>
@@ -48,9 +52,24 @@ export default function TaskDetail({ task }: Props) {
                 label={`～ ${task.dueDate ? task.dueDate : "今日"}`}
                 className={styles.badge}
             />
+            <div className={styles.switch}>
+            {isToday && (
+                <Tooltip  title={forceShow ? "サブタスクを隠す" : "サブタスクを表示"} placement="top">
+                    <Switch
+                        checked={forceShow}
+                        onChange={(e) => setForceShow(e.target.checked)}
+                    />
+                </Tooltip>
+            )}
+            </div>
         </div>
-        期限が指定されてたらTodo出す
-
+        { forceShow || !isToday ? (
+            <TodoDetail />
+        ) : (
+            <div className={styles.todo} >
+                期限日が今日のタスクは、サブタスクが表示されません。
+            </div>
+        )}
         <div className={styles.infoRow}>
             <div className={styles.leftGroup}>
                 <Chip
@@ -72,11 +91,9 @@ export default function TaskDetail({ task }: Props) {
                 <TaskDeleteButton id={task.id.toString()} />
 
                 <Tooltip title="更新する">
-                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
                     <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
                         <EditIcon />
                     </Fab>
-                    </Box>
                 </Tooltip>
                 <TaskEditFormContainer open={open} onClose={() => {setOpen(false)}} id={task.id} />
             </div>
