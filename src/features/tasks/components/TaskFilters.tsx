@@ -44,7 +44,7 @@ export function TaskFilter({
             <label>優先度:</label>
             <Select
                 value={filter.priority || ""}
-                onChange={(e, value) => setFilter({ ...filter, priority: value || undefined })}
+                onChange={(_, value) => setFilter({ ...filter, priority: value || undefined })}
                 size="sm"
     >
                 <Option value="">すべて</Option>
@@ -56,7 +56,7 @@ export function TaskFilter({
             <label>期限日:</label>
             <Select
                 value={filter.dueDate || ""}
-                onChange={(e, value) => setFilter({ ...filter, dueDate: value as "past" | "today" | "upcoming" })}
+                onChange={(_, value) => setFilter({ ...filter, dueDate: value as "past" | "today" | "upcoming" })}
                 size="sm"
     >
                 <Option value="">すべて</Option>
@@ -69,7 +69,7 @@ export function TaskFilter({
             <label>ソート基準:</label>
             <Select
                 value={sortKey}
-                onChange={(e, value) => setSortKey(value as "createdAt" | "dueDate")}
+                onChange={(_, value) => setSortKey(value as "createdAt" | "dueDate")}
                 size="sm"
     >
                 <Option value="createdAt">作成日</Option>
