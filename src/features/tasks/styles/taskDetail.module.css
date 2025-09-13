@@ -1,9 +1,8 @@
 .container {
-  padding: 20px;
-  max-width: 900px;
-  margin: 2rem auto 0;
-  width: 100%;
-  padding: 2rem;
+  width: 90%; /* 画面幅に対して9割を使う */
+  max-width: 900px; /* PCでは広がりすぎないよう制限 */
+  margin: 2rem auto 0; /* 中央寄せ */
+  padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -13,7 +12,6 @@
   font-size: 2.5rem;
   color: #333;
   margin-bottom: 1rem;
-  margin-top: 0;
 }
 
 .description {
@@ -26,6 +24,9 @@
   font-size: 1rem;
   color: #666;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .badge {
@@ -35,7 +36,7 @@
   font-size: 0.75rem;
   font-weight: 500;
   text-align: center;
-}
+  min-width: 70px;}
 
 .highPriority {
   background-color: #fee2e2;
@@ -57,5 +58,23 @@
   right: 40px;  /* 右からの距離 */
   align-items: right;
   justify-content: flex-end;
-  margin-bottom: 15px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between; /*   左右に配置 */
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.leftGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rightGroup {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto; /* 常に右寄せ */
 }

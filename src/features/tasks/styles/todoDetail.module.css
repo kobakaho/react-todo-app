@@ -1,0 +1,54 @@
+.container {
+    background-color: #fefefe;          /* 白背景 */
+    border-radius: 8px;              /* 角丸 */
+    padding: 16px;                   /* 内側余白 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* 薄い影 */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.taskList {
+    margin: 0 20px;
+    flex-direction: column;
+}
+
+.taskList > *:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: 5% auto;
+}
+
+.input form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.input .textField {
+  flex: 1; /* ← TextFieldだけ可変幅に */
+}
+
+.input .addButton {
+  flex-shrink: 0; /* ← Fabが縮まないようにする */
+}
+
+.completed {
+    background-color: #f9f9f9;
+    opacity: 0.7;
+}
+
+.todoTitle {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.disabledTitle {
+    cursor: none;
+    text-decoration: line-through;
+    color: #888;
+}
+

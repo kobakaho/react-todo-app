@@ -1,6 +1,6 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../../firebase";
-import { Task } from "../../../types/task";
+import { db } from "../../../../firebase";
+import { Task } from "../../../../types/task";
 
 export const getTaskById = (id: string, callback: (task: Task | null) => void) => {
   try {

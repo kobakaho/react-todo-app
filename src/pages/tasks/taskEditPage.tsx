@@ -10,12 +10,10 @@ export default function TaskEditPage() {
     return null;
   }
   return (
-    <div>
       <TaskEditFormContainer
         open={open}
         onClose={() => setOpen(false)}
         id={id}
       />
-    </div>
   )
 }

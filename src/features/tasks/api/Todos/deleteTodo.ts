@@ -1,9 +1,9 @@
 import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { db } from "../../../../firebase";
 
-export const deleteTask = async (id: string) => {
+export const deleteTodo = async (taskId: string, todoId: string) => {
   try{
-    const docRef = doc(db, "tasks", id);
+    const docRef = doc(db, "tasks", taskId, "todos", todoId);
     await deleteDoc(docRef);
     console.log("削除が成功しました。");
     } catch (error) {

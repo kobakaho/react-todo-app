@@ -1,10 +1,10 @@
-import { TaskFormData } from "../../../types/task";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { TaskFormData } from "../../../../types/task";
+import { db } from "../../../../firebase";
 
-export const updateTask = async (id: string, data: Partial<TaskFormData>) => {
+export const updateTodo = async (taskId: string, todoId: string, data: Partial<TaskFormData>) => {
   try{
-    const taskRef = doc(db, "tasks", id);
+    const taskRef = doc(db, "tasks", taskId, "todos", todoId);
     await updateDoc(taskRef, {
         ...data,
         updateAt: serverTimestamp(),

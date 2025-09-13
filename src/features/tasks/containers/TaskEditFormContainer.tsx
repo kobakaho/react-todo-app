@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getTaskById } from "../api/getTaskById";
 import { updateTask } from "../api/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
@@ -8,7 +9,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Button from '@mui/material/Button';
 import TaskForm from "../components/TaskForm";
-import styles from "../styles/taskForm.module.css";
 
 // TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
 export default function TaskEditFormContainer({
@@ -27,6 +27,7 @@ export default function TaskEditFormContainer({
   // これにより、型安全なコーディングが可能になる
   //const { id } = useParams<{ id?: string }>(); //編集時にはidが必要なためidを渡す
   const [ formData, setFormData ] = useState<TaskFormData | null>(null);
+  const navigate = useNavigate();
 
   // useEffectフックを使用
   // コンポーネントがマウントされた際に、getTaskById関数を使用して指定されたIDのタスクデータを取得
@@ -64,6 +65,7 @@ export default function TaskEditFormContainer({
       return null;
     });
   }
+
   // handleSubmit関数
   // フォームが送信された際に、updateTask関数を実行してタスク情報を更新し、タスク詳細ページにリダイレクト
   // ここでも id の存在チェックや formData の型チェック→TypeScriptによるバグ防止の効果が発揮されます
@@ -72,26 +74,23 @@ export default function TaskEditFormContainer({
     e.preventDefault();
       await updateTask(id, formData);
       alert("タスクが更新されました");
+      navigate(`/tasks/${id}`);
       onClose();
   };
 
   return (
-    <div className={styles.formContainer}>
-      <div>
-        <Dialog open={open} onClose={onClose}>
-          <DialogActions>
-              <Button onClick={onClose}>キャンセル</Button>
-          </DialogActions>
-          <DialogContent>
-          <TaskForm
-              formData={formData}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              id={id}
-          />
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
+      <Dialog open={open} onClose={onClose}>
+        <DialogActions>
+            <Button onClick={onClose}>キャンセル</Button>
+        </DialogActions>
+        <DialogContent>
+        <TaskForm
+            formData={formData}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            id={id}
+        />
+        </DialogContent>
+      </Dialog>
   );
 }
