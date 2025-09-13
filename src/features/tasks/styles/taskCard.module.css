@@ -1,10 +1,9 @@
 .taskCard {
   display: grid;
-  grid-template-columns:auto 1fr 120px 120px ;
-  grid-template-rows: auto;
-  column-gap: 2rem;
+  grid-template-columns:auto 1fr auto 100px 110px ;
+  column-gap: 1rem;
   align-items: center;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease; 
 }
 
 .taskCard:hover {
@@ -16,7 +15,6 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding-left: 1.5rem;
   transition: color 0.2s ease;
 }
 
@@ -27,7 +25,6 @@
 .taskTitle {
   font-weight: 600;
   color: #111827;
-  margin: 0;
 }
 
 .badge {
@@ -59,10 +56,6 @@
 .defaultPriority {
   background-color: #e5e7eb;
   color: #374151;
-}
-
-.dueDate {
-  color: #6b7280;
 }
 
 /*チェックボックスを有効にしたらtask操作を無効化*/
