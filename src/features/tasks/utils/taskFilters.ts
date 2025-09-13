@@ -4,7 +4,6 @@ type DueDateFilter = "past" | "today" | "upcoming";
 
 type Props = {
     priority?: string;
-    status?: string;
     dueDate?: DueDateFilter; 
 };
 
@@ -13,11 +12,6 @@ export const applyFilter = (tasks: Task[], filter: Props): Task[] => {
 
     if (filter.priority) {
         filteredTasks = filteredTasks.filter(task => task.priority === filter.priority);
-    }
-
-    if (filter.status) {
-        const isCompleted = filter.status === "完了";
-        filteredTasks = filteredTasks.filter(task => task.status === isCompleted);
     }
 
     if (filter.dueDate) {

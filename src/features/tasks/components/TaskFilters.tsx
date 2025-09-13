@@ -5,18 +5,17 @@ import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+import Switch from "@mui/material/Switch";
 import styles from "../styles/TaskListContainer.module.css";
 
 
 type Props = {
     filter: {
     priority?: string;
-    status?: string;
     dueDate?: "past" | "today" | "upcoming";
     };
     setFilter: React.Dispatch<React.SetStateAction<{
     priority?: string;
-    status?: string;
     dueDate?: "past" | "today" | "upcoming";
     }>>;
     sortKey: "createdAt" | "dueDate";
@@ -24,6 +23,8 @@ type Props = {
     sortOrder: "asc" | "desc";
     setSortOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
     handleToggleSort: () => void;
+    showCompleted: boolean;
+    setShowCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export function TaskFilter({
@@ -33,22 +34,13 @@ export function TaskFilter({
     setSortKey,
     sortOrder,
     handleToggleSort,
+    showCompleted,
+    setShowCompleted,
 }: Props) {
 
     return (
     <div className={styles.FilterContainer}>
         <div className={styles.FilterItem}>
-            <label>ステータス:</label>
-            <Select
-                value={filter.status || ""}
-                onChange={(e, value) => setFilter({ ...filter, status: value || undefined })}
-                size="sm"
-            >
-                <Option value="">すべて</Option>
-                <Option value="未完了">未完了</Option>
-                <Option value="完了">完了</Option>
-            </Select>
-
             <label>優先度:</label>
             <Select
                 value={filter.priority || ""}
@@ -96,6 +88,15 @@ export function TaskFilter({
                     <FilterListIcon />
                 </IconButton>
             </Tooltip>
+            <Divider orientation="vertical" variant="middle" flexItem sx={{ mx: 2 }} />
+
+            <Tooltip  title={showCompleted ? "完了済みタスクを非表示" : "完了済みタスクを表示"} placement="top">
+                <Switch
+                    checked={showCompleted}
+                    onChange={(e) => setShowCompleted(e.target.checked)}
+                />
+            </Tooltip>
+
         </div>
     </div>
     )

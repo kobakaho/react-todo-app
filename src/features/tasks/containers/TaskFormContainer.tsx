@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createTask } from "../api/createTask";
+import { createTask } from "../api/Task/createTask";
 import { TaskFormData } from "../../../types/task";
 import TaskForm from "../components/TaskForm";
 import Button from '@mui/material/Button';
@@ -16,18 +16,20 @@ export default function TaskFormContainer({
     open: boolean;
     onClose: () => void;
 }) {
+    const initialFormData: TaskFormData = {
+        title: "",
+        description: "",
+        priority: "medium",
+        dueDate: "",
+        archived: false,
+        status: false
+    };
 
 // const { id } = useParams<{ id?: string }>(); //新規作成時はidは不要
 // TaskFormContainerコンポーネント タスク作成フォームの状態を管理　
 // 入力ミス・ズレを防ぐ
 
-    const [formData, setFormData] = useState<TaskFormData>({
-        title: "",
-        description: "",
-        priority: "medium",
-        dueDate: "",
-        status: false // 初期値は未完了
-    }); // 初期値
+    const [formData, setFormData] = useState<TaskFormData>(initialFormData); // 初期値
 
     // 各フォーム要素の変更時に呼ばれ、formDataを更新
     // priorityは、Priorityという文字列リテラル型に変換する必要がある
@@ -45,10 +47,10 @@ export default function TaskFormContainer({
         e.preventDefault();
         await createTask(formData);
         alert("タスクが作成されました");
+        setFormData(initialFormData);
         navigate("/tasks");
         onClose();
     };
-
 
     return (
         <div>
