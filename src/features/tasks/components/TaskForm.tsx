@@ -1,6 +1,5 @@
 import { TaskFormData } from "../../../types/task";
 import DoneIcon from '@mui/icons-material/Done';
-import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -91,19 +90,15 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
             <div className={styles.Button}>
                 <Tooltip title={id ? "更新する" : "登録する"}>
                 {id ? (
-                <Box sx={{ '& > :not(style)': { m: 1 } }}>
                     <Fab color="secondary" aria-label="edit" type="submit">
                         <DoneIcon />
                     </Fab>
-                </Box>
                 ) : (
-                <Box sx={{ '& > :not(style)': { m: 1 } }}>
                     <Fab color="primary" aria-label="edit" type="submit">
                         <DoneIcon />
                     </Fab>
-                </Box>)}
-
-                    </Tooltip>
+                )}
+                </Tooltip>
             </div>
         </form>
     );

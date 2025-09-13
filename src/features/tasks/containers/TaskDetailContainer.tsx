@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTaskById } from "../api/getTaskById";
+import { getTaskById } from "../api/Task/getTaskById";
 import { Task } from "../../../types/task";
 import TaskDetail from "../components/TaskDetail";
 import Circular from "../../../shared/components/Circular"

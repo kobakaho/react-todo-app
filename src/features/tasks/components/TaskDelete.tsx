@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { deleteTask } from "../api/deleteTask";
+import { deleteTask } from "../api/Task/deleteTask";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,7 +19,11 @@ export default function TaskDeleteButton({ id }: props) {
     // タスク一覧ページにリダイレクトする処理
     const handleClick = async () => {
         if (!id) return
-        const result = window.confirm("本当に削除しますか？");
+        const todoSnapshot = await getDocs(collection(db, "tasks", id, "todos"));
+        const msg = todoSnapshot.empty
+          ? "本当に削除しますか？"
+          : "本当に削除しますか？サブタスクも削除されます。";
+        const result = window.confirm(msg);
         if (result) {
             await deleteTask(id);
             navigate("/tasks");
