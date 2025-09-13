@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getTaskById } from "../api/getTaskById";
-import { updateTask } from "../api/updateTask";
+import { getTaskById } from "../api/Task/getTaskById";
+import { updateTask } from "../api/Task/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
 import Circular from "../../../shared/components/Circular"
 import Dialog from "@mui/material/Dialog";
@@ -40,7 +40,8 @@ export default function TaskEditFormContainer({
             description: task.description,
             priority: task.priority,
             dueDate: task.dueDate,
-            status: task.status
+            status: task.status,
+            archived: task.archived
           });
       }
     });
