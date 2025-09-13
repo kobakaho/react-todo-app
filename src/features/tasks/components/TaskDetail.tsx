@@ -7,7 +7,6 @@ import TaskDeleteButton from "../components/TaskDelete";
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import TaskEditFormContainer from "../containers/TaskEditFormContainer";
@@ -23,19 +22,17 @@ export default function TaskDetail({ task }: Props) {
     const [open, setOpen] = useState(false);
     const [forceShow, setForceShow] = useState(false);
 
-    const isToday = task.dueDate === new Date().toISOString().split('T')[0];
+    const isToday = !task.dueDate || task.dueDate === new Date().toISOString().split('T')[0];
 
     return (
     <div className={styles.container}>
         <div className={styles.backButton}>
             <Tooltip title="戻る">
-                <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                    <Link to="/tasks">
-                        <IconButton aria-label="delete" size="large">
-                            <ClearIcon fontSize="inherit" />
-                        </IconButton>
-                    </Link>
-                </Stack>
+                <Link to="/tasks">
+                    <IconButton aria-label="delete" size="large">
+                        <ClearIcon fontSize="inherit" />
+                    </IconButton>
+                </Link>
             </Tooltip>
         </div>
         <h1 className={styles.title}>{task.title}</h1>
