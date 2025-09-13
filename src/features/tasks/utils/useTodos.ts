@@ -39,7 +39,6 @@ export const useTodos = () => {
 
   const updateTodoItem = useCallback(async (todoId: string, data: Partial<TodoFormData>) => {
     if (!taskId) return;
-    // UIを即時更新（楽観的更新）
     setTodos((prev) =>
       prev.map((todo) =>
         todo.id === todoId ? { ...todo, ...data, updateAt: Timestamp.now() } : todo
@@ -50,14 +49,11 @@ export const useTodos = () => {
       await updateTodo(taskId, todoId, data);
     } catch (error) {
       console.error("todoの更新に失敗しました。:", error);
-      // エラーが発生した場合、UIを元に戻すことも可能
-      // ここではエラーログの出力に留めます
     }
   }, [taskId]);
 
   const deleteTodoItem = useCallback(async (todoId: string) => {
     if (!taskId) return;
-    // UIを即時更新（楽観的更新）
     setTodos((prev) => prev.filter((todo) => todo.id !== todoId));
     // Firestoreをバックグラウンドで更新
     try {
