@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getTaskById } from "../api/getTaskById";
 import { Task } from "../../../types/task";
 import TaskDetail from "../components/TaskDetail";
+import Circular from "../../../shared/components/Circular"
 
 export default function TaskDetailContainer() {
     const { id } = useParams<{ id: string }>();
@@ -14,40 +15,20 @@ export default function TaskDetailContainer() {
     // useEffect コンポーネントがマウントされた時にgetTaskById関数を実行してタスク情報を取得
     // getTaskById関数に、URLパラメータから取得したタスクIDを引数に渡すことで、指定されたタスクの情報を取得できる
     useEffect(() => {
-        if (!id) return;
-        async function fetchTask() {
-            try {
-                const fetchedTask = await getTaskById(id!);
-                setTask(fetchedTask ?? null);
-            } catch (error) {
-                console.error("Error fetching task:", error);
-                setTask(null);
-            }
-        }
-        fetchTask();
+        const unsubscribe = getTaskById(id!, (task) => {
+            setTask(task);
+        });
+        return () => unsubscribe();
     }, [id]);
-    // setTask(fetchedTask ?? null);
-    // 取得されたタスクが undefined の場合もあるため、?? 演算子で null に置き換え、安全に扱えるようにしている
 
     if (!task) {
-        return (
-            <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "300px",
-            }}
-            >
-                読みこみ中...
-            </div>
-        );
+        return <Circular />
     }
 
     return (
-        <div>
-            <TaskDetail task={task} /> {/* 取得したタスク情報をTaskDetailコンポーネントに渡す */}
-        </div>
+        <TaskDetail task={task} />
     );
 }
 // タスク情報が取得できていない場合は、ローディング表示
+        {/* 取得したタスク情報をTaskDetailコンポーネントに渡す */}
 

@@ -1,4 +1,10 @@
 import { TaskFormData } from "../../../types/task";
+import DoneIcon from '@mui/icons-material/Done';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
 import styles from "../styles/taskForm.module.css";
 
 // props コンポーネント間でデータや関数をやり取りすることができる
@@ -17,14 +23,29 @@ type Props = {
     id?: string;
     // ? は id プロパティは必須ではない id が存在してもなくても良い
 };
+const priority = [
+    {
+        value: "low",
+        label: "低",
+    },
+    {
+        value: "medium",
+        label: "中",
+    },
+    {
+        value: "high",
+        label: "高",
+    },
+];
 
 // TaskFormコンポーネント タスク作成フォームを表示
 export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
     return (
-        <form onSubmit={onSubmit} className={styles.form}>
+
+        <form onSubmit={onSubmit}>
             <div className={styles.formGroup}>
                 <label>タイトル:</label>
-                <input
+                <TextField
                     type="text"
                     name="title"
                     value={formData.title}
@@ -34,36 +55,56 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
             </div>
             <div className={styles.formGroup}>
                 <label>説明:</label>
-                <textarea
+                <TextField
+                    type="text"
                     name="description"
                     value={formData.description}
+                    multiline
+                    rows={3}
                     onChange={onChange}
                 />
             </div>
             <div className={styles.formGroup}>
                 <label>優先度:</label>
-                <select
+                <TextField
                     name="priority"
                     value={formData.priority}
                     onChange={onChange}
+                    select
                 >
-                    <option value="low">低</option>
-                    <option value="medium">中</option>
-                    <option value="high">高</option>
-                </select>
+                {priority.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+                </TextField>
             </div>
             <div className={styles.formGroup}>
                 <label>期限日:</label>
-                <input
+                <TextField
                     type="date"
                     name="dueDate"
                     value={formData.dueDate || ""}
                     onChange={onChange}
                 />
             </div>
-            <button type="submit" className={styles.submitButton}>
-                {id ? "更新" : "作成"} {/* idが存在する場合は「更新する」、存在しない場合は「作成する」 */}
-            </button>
+            <div className={styles.Button}>
+                <Tooltip title={id ? "更新する" : "登録する"}>
+                {id ? (
+                <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                    <Fab color="secondary" aria-label="edit" type="submit">
+                        <DoneIcon />
+                    </Fab>
+                </Box>
+                ) : (
+                <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                    <Fab color="primary" aria-label="edit" type="submit">
+                        <DoneIcon />
+                    </Fab>
+                </Box>)}
+
+                    </Tooltip>
+            </div>
         </form>
     );
 }

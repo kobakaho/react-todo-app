@@ -3,6 +3,7 @@ import { deleteTask } from "../api/deleteTask";
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Tooltip from '@mui/material/Tooltip';
 
 type props = {
     id? : string
@@ -24,10 +25,12 @@ export default function TaskDeleteButton({ id }: props) {
     };
 
     return (
-    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }} onClick={handleClick}>
-      <IconButton aria-label="delete" size="large">
-        <DeleteIcon fontSize="inherit" />
-      </IconButton>
-    </Stack>
- );
+    <Tooltip title="削除する">
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }} onClick={handleClick}>
+        <IconButton aria-label="delete" size="large">
+          <DeleteIcon fontSize="inherit" />
+        </IconButton>
+      </Stack>
+    </Tooltip>
+  );
 }

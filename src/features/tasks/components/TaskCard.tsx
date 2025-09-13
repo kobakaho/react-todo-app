@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import styles from "../styles/taskCard.module.css";
 import { getPriorityClass } from "../utils/priority";
 import { Task } from "../../../types/task";
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import styles from "../styles/taskCard.module.css";
 
 type Props = {
     task: Task;
@@ -17,19 +20,27 @@ export default function TaskCard({ task, onToggleStatus }: Props) { // onToggleS
 
   return (
     <div className={`${styles.taskCard} ${task.status ? styles.completed : ""}`}>
-      <Checkbox
-        checked={task.status}
-        onChange={() => onToggleStatus(task.id, !task.status)}
-        sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
-      />
+      <Tooltip title={task.status ? "完了を取り消す" : "完了する"}>
+        <Checkbox
+          checked={task.status}
+          onChange={() => onToggleStatus(task.id, !task.status)}
+          sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+        />
+      </Tooltip>
       <Link to={`/tasks/${task.id}`} className={styles.detailLink}>
         <h3 className={styles.taskTitle}>{task.title}</h3>
       </Link>
         <p className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>{task.priority}</p>
-        <p className={styles.dueDate}>～ {task.dueDate ? task.dueDate : "今日"}</p>
+        <Stack direction="row" spacing={1}>
+        <Chip
+            variant="outlined"
+            color="success"
+            label={`～ ${task.dueDate ? task.dueDate : "今日"}`}
+            className={styles.info}
+        />
+        </Stack>
     </div>
-
-    );
+  );
 }
 // タスクのステータスに応じてスタイルを適用
 //　可読性を向上するためのコンポーネント分割
