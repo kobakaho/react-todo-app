@@ -2,6 +2,7 @@
   width: 90%; /* 画面幅に対して9割を使う */
   max-width: 900px; /* PCでは広がりすぎないよう制限 */
   margin: 2rem auto 0; /* 中央寄せ */
+  margin-bottom: 2rem;
   padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -78,3 +79,15 @@
   gap: 0.5rem;
   margin-left: auto; /* 常に右寄せ */
 }
+
+.switch {
+  margin-left: auto; /* 常に右寄せ */
+}
+
+.todo {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  margin: 20px 0;
+}
+
