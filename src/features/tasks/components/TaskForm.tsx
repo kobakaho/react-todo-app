@@ -80,6 +80,7 @@ export default function TaskForm({ formData, onChange, onSubmit, id }: Props) {
             </div>
             <div className={styles.formGroup}>
                 <label>期限日:</label>
+                <small>未入力の場合は今日に設定されます</small>
                 <TextField
                     type="date"
                     name="dueDate"

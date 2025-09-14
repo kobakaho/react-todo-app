@@ -49,3 +49,11 @@
 .taskList > *:not(:last-child) {
   border-bottom: 1px solid #e5e7eb;
 }
+
+.task {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  margin: 20px 0;
+}
+

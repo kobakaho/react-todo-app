@@ -21,6 +21,7 @@ export default function TaskDetailContainer() {
             if (task) {
             setTask(task);
         } else {
+            alert("タスクが見つかりませんでした。");
             navigate("/tasks");
         }
         });

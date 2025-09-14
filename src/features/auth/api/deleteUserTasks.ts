@@ -16,10 +16,14 @@ export const deleteUserTasks = async (userId: string): Promise<void> => {
     // writeBatch 一括書き込み
     // バッチ処理で複数のドキュメントを一度に削除
     const batch = writeBatch(db);
-    querySnapshot.forEach((document) => {
-      batch.delete(document.ref);
-    });
+    for (const taskDoc of querySnapshot.docs) {
+      const todosCollectionRef = collection(db, "tasks", taskDoc.id, "todos");
+      const todosSnapshot = await getDocs(todosCollectionRef);
 
+      todosSnapshot.forEach((document) => {
+        batch.delete(document.ref);
+      });
+    }
     await batch.commit();
   } catch (error) {
     console.error("タスクの一括削除中にエラーが発生しました:", error);
