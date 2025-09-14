@@ -19,7 +19,7 @@ export default function Header() {
                 </Link>
             </Typography>
             <Stack spacing={2} direction="row">
-                <Button variant="contained" color="inherit" onClick={() => navigate("/signup")}>新規登録</Button>
+                <Button variant="outlined" color="inherit" onClick={() => navigate("/signup")}>新規登録</Button>
                 <Button variant="outlined" color="inherit"  onClick={() => navigate("/signin")}>ログイン</Button>
             </Stack>
             </Toolbar>
