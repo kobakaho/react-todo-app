@@ -7,23 +7,23 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 export default function Header() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <header>
-        <AppBar position="static">
-            <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                タスク管理アプリ
-                </Link>
-            </Typography>
-            <Stack spacing={2} direction="row">
-                <Button variant="outlined" color="inherit" onClick={() => navigate("/signup")}>新規登録</Button>
-                <Button variant="outlined" color="inherit"  onClick={() => navigate("/signin")}>ログイン</Button>
-            </Stack>
-            </Toolbar>
-        </AppBar>
-        </header>
-    );
+  return (
+    <header>
+      <AppBar position="static">
+        <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          タスク管理アプリ
+          </Link>
+        </Typography>
+        <Stack spacing={2} direction="row">
+          <Button variant="outlined" color="inherit" onClick={() => navigate("/signup")}>新規登録</Button>
+          <Button variant="outlined" color="inherit"  onClick={() => navigate("/signin")}>ログイン</Button>
+        </Stack>
+        </Toolbar>
+      </AppBar>
+    </header>
+  );
 }

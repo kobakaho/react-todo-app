@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import styles from "../../styles/home.module.css";
 
 export default function Homepage() {
- return (
+  return (
     <div className={styles.container}>
       <h1 className={styles.title}>タスク管理アプリ</h1>
       <p className={styles.description}>
@@ -15,7 +15,7 @@ export default function Homepage() {
         </Button>
       </Link>
     </div>
- )
+  )
 }
 // Homepageコンポーネント トップページに表示する
 // Linkコンポーネント　ReactRouterのリンクコンポーネント　ユーザーのナビゲーション

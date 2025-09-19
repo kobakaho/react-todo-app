@@ -11,14 +11,14 @@ export default function TaskList({ tasks, onToggleStatus }: Props) {
   return (
     <div>
       <div className={styles.taskList}>
-        {tasks && tasks.length > 0 ? (
-        tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onToggleStatus={onToggleStatus}
-          />
-        ))
+      {tasks && tasks.length > 0 ? (
+      tasks.map((task) => (
+        <TaskCard
+          key={task.id}
+          task={task}
+          onToggleStatus={onToggleStatus}
+        />
+      ))
       ) : (
         <p className={styles.task}>タスクはありません。作成してみましょう！</p>
       )}
