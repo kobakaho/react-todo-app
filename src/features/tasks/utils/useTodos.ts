@@ -7,6 +7,7 @@ import { getTodos } from "../api/Todos/getTodos";
 import { createTodo } from "../api/Todos/createTodo";
 import { updateTodo } from "../api/Todos/updateTodo";
 import { deleteTodo } from "../api/Todos/deleteTodo";
+import { toast } from 'react-toastify';
 
 export const useTodos = () => {
   const { id: taskId } = useParams<{ id: string }>();
@@ -48,7 +49,7 @@ export const useTodos = () => {
     try {
       await updateTodo(taskId, todoId, data);
     } catch (error) {
-      console.error("todoの更新に失敗しました。:", error);
+      toast.error("todoの更新に失敗しました。");
     }
   }, [taskId]);
 
@@ -59,7 +60,7 @@ export const useTodos = () => {
     try {
       await deleteTodo(taskId, todoId);
     } catch (error) {
-      console.error("todoの削除に失敗しました。:", error);
+      toast.error("todoの削除に失敗しました。");
     }
   }, [taskId]);
 
@@ -83,7 +84,7 @@ export const useTodos = () => {
       });
       await batch.commit();
     } catch (error) {
-      console.error("todoの並び替えに失敗しました。:", error);
+      toast.error("todoの並び替えに失敗しました。");
     }
   }, [taskId]);
 
