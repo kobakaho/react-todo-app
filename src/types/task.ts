@@ -5,16 +5,16 @@ export type Priority = "high" | "medium" | "low";
 
 // タスクオブジェクト全体の方を定義
 export interface Task {
-    id: string; // firebase用に変更
-    title: string;
-    description: string;
-    status: boolean; // true false
-    priority: Priority; // リテラル型（特定の値を持つ型）
-    // 意図しない値（例：high・medium・low以外の値）が入ることをコンパイル時に防ぐ
-    dueDate: string;
-    archived: boolean;
-    createdAt: Timestamp;
-    updateAt: Timestamp;
+	id: string; // firebase用に変更
+	title: string;
+	description: string;
+	status: boolean; // true false
+	priority: Priority; // リテラル型（特定の値を持つ型）
+	// 意図しない値（例：high・medium・low以外の値）が入ることをコンパイル時に防ぐ
+	dueDate: string;
+	archived: boolean;
+	createdAt: Timestamp;
+	updateAt: Timestamp;
 }
 
 // タスク作成・編集フォームのデータ型

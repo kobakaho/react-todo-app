@@ -6,8 +6,8 @@ export const updateTodo = async (taskId: string, todoId: string, data: Partial<T
   try{
     const taskRef = doc(db, "tasks", taskId, "todos", todoId);
     await updateDoc(taskRef, {
-        ...data,
-        updateAt: serverTimestamp(),
+      ...data,
+      updateAt: serverTimestamp(),
     });
     console.log("更新が成功しました。");
     } catch (error) {

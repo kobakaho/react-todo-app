@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes, Outlet } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
+import { ToastContainer } from 'react-toastify';
 import PrivateRoute from "./features/auth/PrivateRoute";
 import NotFound from "./shared/components/NotFound";
 import Homepage from "./pages/home";
@@ -35,6 +36,8 @@ function App() {
   }
 
   return (
+    <>
+      <ToastContainer />
       <Routes>
           <Route element={<>{user ? <AuthHeader /> : <Header />}<Outlet /></>}>
             <Route path="/" element={<Homepage />} />
@@ -52,8 +55,9 @@ function App() {
                 <Route path="/tasks/:id/edit" element={<TaskEditPage />} />{/* タスク編集ページへのルート */}
               </Route>
           </Route>
-          <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
+    </>
   );
 }
 

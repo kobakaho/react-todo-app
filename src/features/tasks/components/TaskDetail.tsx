@@ -15,86 +15,84 @@ import Switch from "@mui/material/Switch";
 import styles from "../styles/taskDetail.module.css";
 
 type Props = {
-    task: Task;
+  task: Task;
 };
 
 export default function TaskDetail({ task }: Props) {
-    const [open, setOpen] = useState(false);
-    const [forceShow, setForceShow] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [forceShow, setForceShow] = useState(false);
+  const isToday = !task.dueDate || task.dueDate === new Date().toISOString().split('T')[0];
 
-    const isToday = !task.dueDate || task.dueDate === new Date().toISOString().split('T')[0];
-
-    return (
+  return (
     <div className={styles.container}>
-        <div className={styles.backButton}>
-            <Tooltip title="戻る">
-                <Link to="/tasks">
-                    <IconButton aria-label="delete" size="large">
-                        <ClearIcon fontSize="inherit" />
-                    </IconButton>
-                </Link>
+      <div className={styles.backButton}>
+        <Tooltip title="戻る">
+          <Link to="/tasks">
+            <IconButton aria-label="delete" size="large">
+              <ClearIcon fontSize="inherit" />
+            </IconButton>
+          </Link>
+        </Tooltip>
+      </div>
+      <h1 className={styles.title}>{task.title}</h1>
+      <p className={styles.description}>{task.description}</p>
+      <div className={styles.info}>
+          優先度 :{" "}
+          <span className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>
+          {task.priority}
+          </span>
+          期限日 :
+          <Chip
+            variant="outlined"
+            color="success"
+            label={`～ ${task.dueDate ? task.dueDate : "今日"}`}
+            className={styles.badge}
+          />
+          <div className={styles.switch}>
+          {isToday && (
+            <Tooltip  title={forceShow ? "サブタスクを隠す" : "サブタスクを表示"} placement="top">
+              <Switch
+                checked={forceShow}
+                onChange={(e) => setForceShow(e.target.checked)}
+              />
             </Tooltip>
-        </div>
-        <h1 className={styles.title}>{task.title}</h1>
-        <p className={styles.description}>{task.description}</p>
-        <div className={styles.info}>
-            優先度 :{" "}
-            <span className={`${styles.badge} ${getPriorityClass(task.priority, styles)}`}>
-            {task.priority}
-            </span>
-            期限日 :
-            <Chip
-                variant="outlined"
-                color="success"
-                label={`～ ${task.dueDate ? task.dueDate : "今日"}`}
-                className={styles.badge}
-            />
-            <div className={styles.switch}>
-            {isToday && (
-                <Tooltip  title={forceShow ? "サブタスクを隠す" : "サブタスクを表示"} placement="top">
-                    <Switch
-                        checked={forceShow}
-                        onChange={(e) => setForceShow(e.target.checked)}
-                    />
-                </Tooltip>
-            )}
-            </div>
+          )}
+          </div>
         </div>
         { forceShow || !isToday ? (
-            <TodoDetail />
+          <TodoDetail />
         ) : (
-            <div className={styles.todo} >
-                期限日が今日のタスクは、サブタスクが表示されません。
-            </div>
+          <div className={styles.todo} >
+            期限日が今日のタスクは、サブタスクが表示されません。
+          </div>
         )}
         <div className={styles.infoRow}>
-            <div className={styles.leftGroup}>
-                <Chip
-                    disabled
-                    size="small"
-                    label={
-                        <div>作成日: {task.createdAt ? task.createdAt.toDate().toLocaleString() : ""}</div>
-                    }
-                />
-                <Chip
-                    disabled
-                    size="small"
-                    label={
-                        <div>更新日: {task.updateAt ? task.updateAt.toDate().toLocaleString() : ""}</div>
-                    }
-                />
+          <div className={styles.leftGroup}>
+            <Chip
+              disabled
+              size="small"
+              label={
+                <div>作成日: {task.createdAt ? task.createdAt.toDate().toLocaleString() : ""}</div>
+              }
+            />
+            <Chip
+              disabled
+              size="small"
+              label={
+                <div>更新日: {task.updateAt ? task.updateAt.toDate().toLocaleString() : ""}</div>
+              }
+            />
             </div>
             <div className={styles.rightGroup}>
-                <TaskDeleteButton id={task.id.toString()} />
-
-                <Tooltip title="更新する">
-                    <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
-                        <EditIcon />
-                    </Fab>
-                </Tooltip>
-                <TaskEditFormContainer open={open} onClose={() => {setOpen(false)}} id={task.id} />
-            </div>
+              <TaskDeleteButton id={task.id.toString()} />
+              <Tooltip title="更新する">
+                <Fab color="secondary" aria-label="add" onClick={() => {setOpen(true)}}>
+                  <EditIcon />
+                </Fab>
+              </Tooltip>
+              <TaskEditFormContainer open={open} onClose={() => {setOpen(false)}} id={task.id} />
+          </div>
         </div>
     </div>
-    );
+  );
 }

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut, deleteUser, updateProfile, User } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { deleteUserTasks } from "../../features/auth/api/deleteUserTasks"
+import { toast } from 'react-toastify';
 import Divider from '@mui/material/Divider';
 import Circular from "../../shared/components/Circular";
 import Button from "@mui/material/Button";
@@ -14,7 +15,7 @@ import TextField from "@mui/material/TextField";
 import styles from "../../styles/auth.module.css";
 
 
-const Mypage: React.FC = () => {
+export default function Mypage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
@@ -35,23 +36,21 @@ const Mypage: React.FC = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      toast.success("ログアウトしました");
       navigate("/signin");
-      alert("ログアウトしました");
-      console.log("ログアウトしました")
     } catch (error) {
-      console.error("ログアウトエラー:", error);
+      toast.error("ログアウトに失敗しました");
     }
   };
-//アバターの変更まだ
+  //アバターの変更まだ
   const handleUpdateProfile = async () => {
     if (auth.currentUser) {
       try{
         await updateProfile(auth.currentUser, { displayName: username, photoURL: auth.currentUser.photoURL });
-        alert("プロフィールが更新されました");
+        toast.success("プロフィールが更新されました");
         setOpen(false);
       } catch (error) {
-        console.error("プロフィールの更新に失敗しました:", error);
-        alert("プロフィールの更新に失敗しました");
+        toast.error("プロフィールの更新に失敗しました");
       }
     }
   };
@@ -62,13 +61,11 @@ const Mypage: React.FC = () => {
         if (confirm("本当にアカウントを削除しますか？作成したタスクもすべて削除されます")) {
           await deleteUserTasks(user.uid);
           await deleteUser(user);
+          toast.success("アカウントを削除しました");
           navigate("/signup");
-          alert("アカウントを削除しました");
-          console.log("アカウントを削除しました")
         }
       } catch (error) {
-        console.error('アカウント削除エラー:', error);
-        alert('アカウント削除に失敗しました。');
+        toast.error('アカウント削除に失敗しました。');
       }
     }
   };
@@ -117,4 +114,3 @@ const Mypage: React.FC = () => {
   );
 };
 
-export default Mypage;

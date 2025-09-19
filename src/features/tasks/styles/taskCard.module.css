@@ -3,7 +3,7 @@
   grid-template-columns:auto 1fr auto 100px 110px ;
   column-gap: 1rem;
   align-items: center;
-  transition: background-color 0.2s ease; 
+  transition: background-color 0.2s ease;
 }
 
 .taskCard:hover {

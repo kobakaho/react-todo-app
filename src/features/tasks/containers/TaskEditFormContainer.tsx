@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getTaskById } from "../api/Task/getTaskById";
 import { updateTask } from "../api/Task/updateTask";
 import { Priority, TaskFormData } from "../../../types/task";
+import { toast } from 'react-toastify';
 import Circular from "../../../shared/components/Circular"
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,20 +13,20 @@ import TaskForm from "../components/TaskForm";
 
 // TaskEditFormContainerコンポーネント タスク編集フォームの状態管理と送信処理を担当
 export default function TaskEditFormContainer({
-    open,
-    onClose,
-    id,
+  open,
+  onClose,
+  id,
 }: {
-    open: boolean;
-    onClose: () => void;
-    id: string;
+  open: boolean;
+  onClose: () => void;
+  id: string;
 }) {
 
   // useParamsフックを使用して、URLパラメータからタスクIDを取得
   // useParams<{ id?: string }>() のように TypeScriptのジェネリクスを使って型注釈を行うことで
   // idがstring型であること（あるいは存在しない可能性）を明示
   // これにより、型安全なコーディングが可能になる
-  //const { id } = useParams<{ id?: string }>(); //編集時にはidが必要なためidを渡す
+  //const { id } = useParams<{ id?: string }>(); 編集時にはidが必要なためidを渡す
   const [ formData, setFormData ] = useState<TaskFormData | null>(null);
   const navigate = useNavigate();
 
@@ -36,13 +37,13 @@ export default function TaskEditFormContainer({
     const unsubscribe = getTaskById(id!, (task) => {
       if (task) {
         setFormData({
-            title: task.title,
-            description: task.description,
-            priority: task.priority,
-            dueDate: task.dueDate,
-            status: task.status,
-            archived: task.archived
-          });
+          title: task.title,
+          description: task.description,
+          priority: task.priority,
+          dueDate: task.dueDate,
+          status: task.status,
+          archived: task.archived
+        });
       }
     });
     return () => unsubscribe();
@@ -74,24 +75,24 @@ export default function TaskEditFormContainer({
     if (!id) return;
     e.preventDefault();
       await updateTask(id, formData);
-      alert("タスクが更新されました");
+      toast.success("タスクが更新されました");
       navigate(`/tasks/${id}`);
       onClose();
   };
 
   return (
-      <Dialog open={open} onClose={onClose}>
-        <DialogActions>
-            <Button onClick={onClose}>キャンセル</Button>
-        </DialogActions>
-        <DialogContent>
-        <TaskForm
-            formData={formData}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            id={id}
-        />
-        </DialogContent>
-      </Dialog>
+    <Dialog open={open} onClose={onClose}>
+      <DialogActions>
+          <Button onClick={onClose}>キャンセル</Button>
+      </DialogActions>
+      <DialogContent>
+      <TaskForm
+          formData={formData}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          id={id}
+      />
+      </DialogContent>
+    </Dialog>
   );
 }

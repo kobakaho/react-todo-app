@@ -1,7 +1,7 @@
 import TaskDetailContainer from "../../features/tasks/containers/TaskDetailContainer";
 
 export default function TaskDetailPage() {
-    return (
-        <TaskDetailContainer />
-    );
+  return (
+    <TaskDetailContainer />
+  );
 }

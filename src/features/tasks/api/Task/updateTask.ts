@@ -6,8 +6,8 @@ export const updateTask = async (id: string, data: Partial<TaskFormData>) => {
   try{
     const taskRef = doc(db, "tasks", id);
     await updateDoc(taskRef, {
-        ...data,
-        updateAt: serverTimestamp(),
+      ...data,
+      updateAt: serverTimestamp(),
     });
     console.log("更新が成功しました。");
     } catch (error) {
